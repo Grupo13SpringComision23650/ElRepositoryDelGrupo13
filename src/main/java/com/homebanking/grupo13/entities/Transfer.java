@@ -21,14 +21,12 @@ public class Transfer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /* TODO: Implementar esto cuando Account este disponible
+    /* TODO: Implementar esto cuando Account (o User) este disponible
     private Account accountSource;
     private Account accountDestine;
     */
 
-    @Column(name="amount",scale=2)
     private BigDecimal amount;
 
-    @Column(name="created_at")
     private Timestamp createAt;
 }
