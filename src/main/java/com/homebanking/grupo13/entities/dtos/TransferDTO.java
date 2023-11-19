@@ -14,7 +14,7 @@ public class TransferDTO {
 
     private Long id;
 
-    /* TODO: Implementar esto cuando Account (o User) este disponible
+    /* TODO: Implementar esto cuando Account este disponible
     private Account accountSource;
     private Account accountDestine;
     */
