@@ -1,32 +1,42 @@
-package com.ar.cac.homebanking.mappers;
+package com.homebanking.grupo13.mappers;
 
-import com.ar.cac.homebanking.models.User;
-import com.ar.cac.homebanking.models.dtos.UserDTO;
+import com.homebanking.grupo13.entities.User;
+import com.homebanking.grupo13.entities.dtos.UserDto;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class UserMapper {
+public class userMapper {
 
-    // Metodos para transformar objetos
+  public static User dtoToUser(UserDto dto){
+    User user = new User();
 
-    public static User dtoToUser(UserDTO dto){
-        User user = new User();
-        user.setName(dto.getName());
-        user.setSurname(dto.getSurname());
-        user.setDni(dto.getDni());
-        user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
-        return user;
-    }
+    user.setId(dto.getId());
+    user.setNameUser(dto.getNameUser());
+    user.setEmail(dto.getEmail());
+    user.setPassword(dto.getPassword());
+    user.setDni(user.getDni());
+    user.setBirthday(dto.getBirthday());
+    user.setAddress(dto.getAddress());
+    user.setStatus(dto.getStatus());
+    user.setCreateAt(dto.getCreateAt());
+    user.setModifiedAt(dto.getModifiedAt());
 
-    public static UserDTO userToDto(User user){
-        UserDTO dto = new UserDTO();
-        dto.setId(user.getId());
-        dto.setName(user.getName());
-        dto.setSurname(user.getSurname());
-        dto.setDni(user.getDni());
-        dto.setEmail(user.getEmail());
-        dto.setPassword(user.getPassword());
-        return dto;
-    }
+    return user;
+  }
+  public static UserDto userToDto(User user){
+    UserDto dto = new UserDto();
+
+    dto.setId(user.getId());
+    dto.setNameUser(user.getNameUser());
+    dto.setEmail(user.getEmail());
+    dto.setPassword(user.getPassword());
+    dto.setDni(user.getDni());
+    dto.setBirthday(user.getBirthday());
+    dto.setAddress(user.getAddress());
+    dto.setStatus(user.getStatus());
+    dto.setCreateAt(user.getCreateAt());
+    dto.setModifiedAt(user.getModifiedAt());
+
+    return dto;
+  }
 }
