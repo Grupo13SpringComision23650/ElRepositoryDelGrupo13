@@ -67,10 +67,11 @@ public class User {
 
   // todo mapeamos con el mismo nombre que Account "owner"
   // todo y aplicamos la cascade, forma de actualizar, para éste caso es all
-  @OneToMany(mappedBy = "owner" ,cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "owner" ,cascade = CascadeType.ALL, , orphanRemoval = true)
   // todo la relacion a muchos la representamos como una lista de Account
   //  asignamos el nombre accounts que utilizaremos para la relacion, y generamos
   //  un Arraylist para mostrar/editar/Borrar cuentas y users
   private List<Account> accounts = new ArrayList<>();
+
 
 }

@@ -1,5 +1,6 @@
 package com.homebanking.grupo13.entities.dtos;
 
+import com.homebanking.grupo13.entities.User;
 import com.homebanking.grupo13.entities.enums.AccountType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,4 +23,6 @@ public class AccountDto {
     private String alias;
 
     private BigDecimal amount;
+
+    private User owner;
 }
