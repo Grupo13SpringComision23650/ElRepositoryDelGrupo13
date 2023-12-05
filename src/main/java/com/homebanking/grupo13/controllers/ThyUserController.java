@@ -1,6 +1,5 @@
 package com.homebanking.grupo13.controllers;
 
-import com.homebanking.grupo13.entities.dtos.BankResponse;
 import com.homebanking.grupo13.entities.dtos.UserDto;
 import com.homebanking.grupo13.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
