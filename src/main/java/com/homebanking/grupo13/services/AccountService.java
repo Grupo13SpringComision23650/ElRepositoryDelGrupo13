@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
-    private final AccountRepository repository;
+    private static AccountRepository repository;
 
     private AccountService(AccountRepository repository){
         this.repository = repository;
@@ -30,7 +30,7 @@ public class AccountService {
                 .collect(Collectors.toList());
     }
 
-    public AccountDto createAccount(AccountDto dto) {
+    public static AccountDto createAccount(AccountDto dto) {
         dto.setAmount(BigDecimal.ZERO);
         // TODO: REFACTOR para crear diferentes tipos de cuenta inicial
         dto.setType(AccountType.CAJA_AHORRO_PESOS);

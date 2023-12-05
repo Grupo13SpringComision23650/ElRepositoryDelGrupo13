@@ -17,7 +17,7 @@ public class AccountController {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping(value = "/accounts")
     public ResponseEntity<List<AccountDto>> getAccounts(){
         return ResponseEntity.status(HttpStatus.OK).body(service.getAccounts());
     }

@@ -37,6 +37,10 @@ public class Account {
     @Column(name = "fecha_modificacion")
     private LocalDateTime updated_at;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     //@
     //private User owner;
 }
