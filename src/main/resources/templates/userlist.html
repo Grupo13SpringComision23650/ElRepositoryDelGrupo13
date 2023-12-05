@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Spring Banking</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+
+  <!-- Custom styles for this template -->
+  <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<div th:insert="/template_user.html::header"></div>
+
+<!-- Page Content -->
+<div class="container">
+
+
+  <!-- Page Heading/Breadcrumbs -->
+  <h1 class="mt-4 mb-3">
+    Spring Banking <small>Usuarios</small>
+  </h1>
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+    <li class="breadcrumb-item active">Ver Usuarios</li>
+  </ol>
+  <h2>Usuarios</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Email</th>
+        <th scope="col">D.N.I</th>
+        <th scope="col">Fecha Cumple</th>
+        <th scope="col">Dirección</th>
+        <th scope="col">Creado</th>
+        <th scope="col">Modificado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="users: ${user}">
+        <td  th:text="${users.nameUser}"></td>
+        <td  th:text="${users.email}"></td>
+        <td  th:text="${users.dni}"></td>
+        <td  th:text="${users.birthday}"></td>
+        <td  th:text="${users.address}"></td>
+        <td  th:text="${users.createAt}"></td>
+        <td  th:text="${users.modifiedAt}"></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<!-- /.container -->
+
+
+<!-- Footer -->
+<div th:insert="/template_user.html::footer"></div>
+
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+
+</html>

@@ -44,14 +44,14 @@ public class TransferService {
 
         // TODO: validar transferencia, no puede haber transferencia
         //      si la cuenta origen no tiene fondo suficiente
-        Transfer transfer1=repository.save(transfer);
+        repository.save(transfer);
 
-        TransferDTO dto1 = TransferMapper.transferToDto(transfer1);
+        TransferDTO dto1 = TransferMapper.transferToDto(transfer);
         return dto1;
     }
 
 
-    /*  TODO: Implementar este metodo cuando Account este disponible
+    /*  TODO: Implementar este metodo cuando Account (o User) este disponible
     public Transfer validateTransfer(TransferDTO dto){
 
 
