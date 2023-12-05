@@ -7,8 +7,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
   public class BankResponse {
-
     private String responseCode;
     private String responseMessage;
-    private AccountInfo accountInfo;
 }
