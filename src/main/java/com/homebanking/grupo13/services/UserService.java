@@ -1,14 +1,19 @@
 package com.homebanking.grupo13.services;
 
 
+import com.homebanking.grupo13.entities.Account;
 import com.homebanking.grupo13.entities.User;
 import com.homebanking.grupo13.entities.dtos.AccountDto;
 import com.homebanking.grupo13.entities.dtos.UserDto;
+import com.homebanking.grupo13.entities.enums.AccountType;
 import com.homebanking.grupo13.mappers.UserMapper;
+import com.homebanking.grupo13.repositories.AccountRepository;
 import com.homebanking.grupo13.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,9 +23,12 @@ import java.util.stream.Collectors;
 public class UserService {
 
     @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
     private UserRepository repository;
 
-    public List<UserDto> getUsers1(){
+    public List<UserDto> getUsers1() {
         // Obtengo la lista de la entidad usuario de la db
         List<User> users = repository.findAll();
         // Mapear cada usuario de la lista hacia un dto
@@ -30,33 +38,36 @@ public class UserService {
         return usersDtos;
     }
 
-    public UserService(UserRepository repository){
+    public UserService(UserRepository repository) {
         this.repository = repository;
     }
 
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         List<User> users = repository.findAll();
         return users;
     }
 
-    public UserDto getUserById(Long id){
+    public UserDto getUserById(Long id) {
         User user = repository.findById(id).get();
         user.setPassword("******");
         return UserMapper.userToDto(user);
     }
 
-    public UserDto createUser(UserDto user){
-        // TODO: agregar validacion de email existente
+    public UserDto createUser(UserDto user) {
         User entity = UserMapper.dtoTouser(user);
         User entitySaved = repository.save(entity);
-        user = UserMapper.userToDto(entitySaved);
-        user.setPassword("******");
+        //user = UserMapper.userToDto(entitySaved);
+        //user.setPassword("******");
+        Account account = new Account();
+        account.setAmount(BigDecimal.ZERO);
+        account.setType(AccountType.CAJA_AHORRO_PESOS);
+        account.setAlias("al.ias." + Math.random() * 100);
+        account.setCbu("c.b.u." + Math.random() * 100);
+        account.setOwner(entity);
+        /// Setear mas atributos
+        accountRepository.save(account);
         return user;
     }
-
-    AccountDto dto = new AccountDto();
-
-
 
 
     public String deleteUser(Long id){
