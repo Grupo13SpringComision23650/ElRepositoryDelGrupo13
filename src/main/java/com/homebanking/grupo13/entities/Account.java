@@ -37,17 +37,6 @@ public class Account {
     @Column(name = "fecha_modificacion")
     private LocalDateTime updated_at;
 
-    //@ManyToOne
-    //private User owner;
     @ManyToOne
-    // todo indicamos en que campo estara registrada la relacion
-    // todo y éste campo no puede ser nulo por lo que la relacion
-    // todo siempre debe existir!!
-    // todo eso quiere decir que cuando generemos un nuevo user
-    // todo éste debe tener al menos una cuenta!
-    @JoinColumn(name = "idUser", nullable = false)
-    // todo la relacion es con User y se llama ouner, éste es el nombre de la relacion
     private User owner;
-
-    // todo hacemos la relacion tambien en User a la inversa
 }

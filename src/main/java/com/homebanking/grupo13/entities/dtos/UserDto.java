@@ -1,17 +1,11 @@
 package com.homebanking.grupo13.entities.dtos;
 
-import com.homebanking.grupo13.entities.enums.AccountType;
-import com.homebanking.grupo13.entities.enums.Status;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
@@ -23,8 +17,8 @@ public class UserDto {
   private String dni;
   private String birthday;
   private String address;
-  private Status status;
-  private LocalDateTime createAt;
-  private LocalDateTime modifiedAt;
+  private boolean status; // agregado
+
+  private List<AccountDto> accounts = new ArrayList<>();
 
 }
