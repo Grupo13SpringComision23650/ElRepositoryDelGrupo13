@@ -37,6 +37,6 @@ public class Account {
     @Column(name = "fecha_modificacion")
     private LocalDateTime updated_at;
 
-    //@
-    //private User owner;
+    @ManyToOne
+    private User owner;
 }
