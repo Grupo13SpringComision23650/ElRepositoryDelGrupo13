@@ -73,7 +73,7 @@ public class UserService {
     public String deleteUser(Long id){
         if (repository.existsById(id)){
             repository.deleteById(id);
-            return "El usuario con id: " + id + " ha sido eliminado";
+            return "El usuario con la id: " + id + " ha sido eliminado";
         } else {
             return "El usuario con id: " + id + ", no ha sido eliminado";
         }
