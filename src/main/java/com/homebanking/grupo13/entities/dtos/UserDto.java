@@ -1,29 +1,25 @@
 package com.homebanking.grupo13.entities.dtos;
 
 import lombok.*;
-import  java.time.LocalDateTime;
-import java.util.Date;
+import org.springframework.validation.annotation.Validated;
 
-@Getter
-@Setter
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-    private Long id;
 
-    private String username;
+  private Long id;
+  private String nameUser;
+  private String email;
+  private String password;
+  private String dni;
+  private String birthday;
+  private String address;
+  private boolean enabled; // agregado
 
-    private String password;
+  private List<AccountDto> accounts = new ArrayList<>();
 
-    private String email;
-
-    private String dni;
-
-    private String address;
-
-    private Date birthday_date;
-
-    private LocalDateTime created_at;
-
-    private LocalDateTime updated_at;
 }

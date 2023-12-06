@@ -38,11 +38,5 @@ public class Account {
     private LocalDateTime updated_at;
 
     @ManyToOne
-    @JoinColumn(name = "id_user", nullable = false)
     private User owner;
-
-
-
-    //@
-    //private User owner;
 }

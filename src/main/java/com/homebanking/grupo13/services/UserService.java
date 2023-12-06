@@ -1,128 +1,125 @@
 package com.homebanking.grupo13.services;
 
-
 import com.homebanking.grupo13.entities.Account;
 import com.homebanking.grupo13.entities.User;
 import com.homebanking.grupo13.entities.dtos.AccountDto;
 import com.homebanking.grupo13.entities.dtos.UserDto;
-import com.homebanking.grupo13.entities.enums.AccountType;
+import com.homebanking.grupo13.mappers.AccountMapper;
 import com.homebanking.grupo13.mappers.UserMapper;
 import com.homebanking.grupo13.repositories.AccountRepository;
-import com.homebanking.grupo13.repositories.UserRepository;
-import jakarta.transaction.Transactional;
+import com.homebanking.grupo13.repositories.IUserRepository;
+import com.homebanking.grupo13.entities.enums.AccountType;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.homebanking.grupo13.mappers.AccountMapper;
 
-import java.math.*;
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-
+import java.time.LocalDateTime;
 
 @Service
+@AllArgsConstructor
 public class UserService {
 
-    @Autowired
-    private AccountRepository accountRepository;
 
-    @Autowired
-    private UserRepository repository;
+  private final IUserRepository userRepository;
 
-    public List<UserDto> getUsers1() {
-        // Obtengo la lista de la entidad usuario de la db
-        List<User> users = repository.findAll();
-        // Mapear cada usuario de la lista hacia un dto
-        List<UserDto> usersDtos = users.stream()
-                .map(UserMapper::userToDto)
-                .collect(Collectors.toList());
-        return usersDtos;
-    }
+  private final AccountRepository accountRepository;
 
-    public UserService(UserRepository repository) {
-        this.repository = repository;
-    }
+  // listar por ID
+  public UserDto getUserById(Long id){
+    User user= userRepository.findById(id).get();
+    return UserMapper.userToDto(user);
+  }
 
-    public List<User> getUsers() {
-        List<User> users = repository.findAll();
-        return users;
-    }
+  //listar Todo
 
-    public UserDto getUserById(Long id) {
-        User user = repository.findById(id).get();
-        user.setPassword("******");
-        return UserMapper.userToDto(user);
-    }
+  public List<UserDto> getUsers() {
+    return userRepository.findAll().stream()
+            .map(UserMapper::userToDto)
+            .collect(Collectors.toList());
+  }
 
-    public UserDto createUser(UserDto user) {
-        User entity = UserMapper.dtoTouser(user);
-        User entitySaved = repository.save(entity);
-        //user = UserMapper.userToDto(entitySaved);
-        //user.setPassword("******");
-        Account account = new Account();
-        account.setAmount(BigDecimal.ZERO);
-        account.setType(AccountType.CAJA_AHORRO_PESOS);
-        account.setAlias("al.ias." + Math.random() * 100);
-        account.setCbu("c.b.u." + Math.random() * 100);
-        account.setOwner(entity);
-        /// Setear mas atributos
-        accountRepository.save(account);
-        return user;
-    }
+//crear user
+  public UserDto createUser(UserDto userDto) {
+    User user = UserMapper.dtoToUser(userDto);
+    user.setEnabled(true);
+    // Falta validaciones aca y en todos los services
+    User savedUser = userRepository.save(user);
+
+    //Deberia ser con service pero no funciono
+  /*
+    AccountDto dto=new AccountDto();
+
+    dto.setType(AccountType.CAJA_AHORRO_PESOS);
+    dto.setAmount(BigDecimal.ZERO);
+    dto.setAlias("al.ias."+Math.random()*100);
+    dto.setCbu("c.b.u."+Math.random()*100);
+    dto.setOwner(savedUser);
+    accountService.createAccount(dto);
+*/
+
+    // esto FUNCIONO !
+    final LocalDateTime now=LocalDateTime.now();
+    Account account=new Account();
+    account.setAmount(BigDecimal.ZERO);
+    account.setType(AccountType.CAJA_AHORRO_PESOS);
+    account.setAlias("codo.a.codo.alias."+(int)(Math.random()*10000));
+    account.setCbu("00000123"+(int)(Math.random()*Integer.MAX_VALUE));
+    account.setCreated_at(now);
+    account.setUpdated_at(now);
+    account.setOwner(savedUser);
+    Account newAccount=accountRepository.save(account);
 
 
-    public String deleteUser(Long id){
-        if (repository.existsById(id)){
-            repository.deleteById(id);
-            return "El usuario con la id: " + id + " ha sido eliminado";
-        } else {
-            return "El usuario con id: " + id + ", no ha sido eliminado";
+    final AccountDto accountDto=AccountMapper.accountToDto(newAccount);
+    final UserDto savedUserDto=UserMapper.userToDto(savedUser);
+    savedUserDto.setAccounts(List.of(accountDto));
+
+    return savedUserDto;
+  }
+
+// update user
+  public UserDto updateUser(UserDto userDto) {
+    Optional<User> optionalUser = userRepository.findById(userDto.getId());
+
+    if (optionalUser.isPresent()) {
+      User existingUser = optionalUser.get();
+      existingUser.setNameUser(userDto.getNameUser());
+      existingUser.setEmail(userDto.getEmail());
+      existingUser.setPassword(userDto.getPassword());
+      existingUser.setDni(userDto.getDni());
+      existingUser.setBirthday(userDto.getBirthday());
+      existingUser.setAddress(userDto.getAddress());
+      existingUser.setEnabled(userDto.isEnabled());
+
+      // Update accounts if needed
+      List<Account> accounts = new ArrayList<>();
+      if (userDto.getAccounts() != null) {
+        for (AccountDto accountDto : userDto.getAccounts()) {
+          Account account = AccountMapper.dtoToAccount(accountDto);
+          account.setOwner(existingUser);
+          accounts.add(account);
         }
+      }
+      existingUser.setAccounts(accounts);
+
+      User updatedUser = userRepository.save(existingUser);
+      return UserMapper.userToDto(updatedUser);
+    } else {
+      // Handle case when user with given ID is not found
+      return null;
     }
+  }
+  // metodo delete no se hace porque no se puede borrar el user
+  // estoy trabajando en el metodo para hacer automaticamente la cuenta al dar de alta un usar..
 
-    public UserDto updateUser(Long id, UserDto dto) {
-        if (repository.existsById(id)){
-            User userToModify = repository.findById(id).get();
-            // Validar qué datos no vienen en null para setearlos al objeto ya creado
+  public void deleteUser(Long id){
+    userRepository.deleteById(id);
+  }
 
-            // Logica del Patch
-            if (dto.getUsername() != null){
-                userToModify.setUsername(dto.getUsername());
-            }
-
-            // TODO: agregar validacion de email existente
-            if (dto.getEmail() != null){
-                userToModify.setEmail(dto.getEmail());
-            }
-
-            if (dto.getPassword() != null){
-                userToModify.setPassword(dto.getPassword());
-            }
-
-            if (dto.getDni() != null){
-                userToModify.setDni(dto.getDni());
-            }
-
-            if (dto.getAddress() != null){
-                userToModify.setAddress(dto.getAddress());
-            }
-            if (dto.getBirthday_date() != null){
-                userToModify.setBirthday_date(dto.getBirthday_date());
-            }
-
-            userToModify.setUpdated_at(LocalDateTime.now());
-
-            User userModified = repository.save(userToModify);
-
-            return UserMapper.userToDto(userModified);
-        }
-
-        return null;
-    }
-
-
-
-    // Validar que existan usuarios unicos por mail
-    public User validateUserByEmail(UserDto dto){
-        return repository.findByEmail(dto.getEmail());
-    }
 }

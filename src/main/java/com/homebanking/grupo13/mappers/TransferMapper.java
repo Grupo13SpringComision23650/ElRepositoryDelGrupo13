@@ -14,7 +14,7 @@ public class TransferMapper {
         transfer.setId(dto.getId());
         transfer.setAmount(dto.getAmount());
 
-        /*  TODO: Implementar esto cuando Account este disponible
+        /*  TODO: Implementar esto cuando Account (o User) este disponible
         transfer.setSource(dto.getSource());
         transfer.setDestine(dto.getDestine());
         */
@@ -28,7 +28,7 @@ public class TransferMapper {
         dto.setId(transfer.getId());
         dto.setAmount(transfer.getAmount());
 
-        /* TODO: Implementar esto cuando Account este disponible
+        /* TODO: Implementar esto cuando Account (o User) este disponible
         dto.setSource(transfer.getSource());
         dto.setDestine(transfer.getDestine());
         */

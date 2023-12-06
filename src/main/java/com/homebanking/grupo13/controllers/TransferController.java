@@ -25,7 +25,7 @@ public class TransferController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<TransferDTO> getTransferById(@PathVariable Long id) {
+    public ResponseEntity<TransferDTO> getTransferById(Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getTransferById(id));
     }
 

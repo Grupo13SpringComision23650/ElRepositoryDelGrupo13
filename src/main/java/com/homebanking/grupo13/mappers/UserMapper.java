@@ -1,35 +1,58 @@
 package com.homebanking.grupo13.mappers;
 
+import com.homebanking.grupo13.entities.Account;
 import com.homebanking.grupo13.entities.User;
+import com.homebanking.grupo13.entities.dtos.AccountDto;
 import com.homebanking.grupo13.entities.dtos.UserDto;
+import lombok.experimental.UtilityClass;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@UtilityClass
 public class UserMapper {
-    public static User dtoTouser(UserDto dto){
-        User user = new User();
-        user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword());
-        user.setAddress(dto.getAddress());
-        user.setDni(dto.getDni());
-        user.setBirthday_date(dto.getBirthday_date());
-        user.setEmail(dto.getEmail());
-        user.setCreated_at(LocalDateTime.now());
-        user.setUpdated_at(LocalDateTime.now());
-        return user;
-    }
 
-    public static UserDto userToDto(User user){
-        UserDto dto = new UserDto();
-        dto.setUsername(user.getUsername());
-        dto.setPassword(user.getPassword());
-        dto.setId(user.getId());
-        dto.setAddress(user.getAddress());
-        dto.setEmail(user.getEmail());
-        dto.setBirthday_date(user.getBirthday_date());
-        dto.setDni(user.getDni());
-        dto.setCreated_at(user.getCreated_at());
-        dto.setUpdated_at(user.getUpdated_at());
-        return dto;
+  public static UserDto userToDto(User user) {
+    UserDto userDto = new UserDto();
+    userDto.setId(user.getId());
+    userDto.setNameUser(user.getNameUser());
+    userDto.setEmail(user.getEmail());
+    userDto.setPassword(user.getPassword());
+    userDto.setDni(user.getDni());
+    userDto.setBirthday(user.getBirthday());
+    userDto.setAddress(user.getAddress());
+    userDto.setEnabled(user.isEnabled());
+
+    List<AccountDto> accountDtos = new ArrayList<>();
+    // accountsDtos da vacio
+    //System.out.println("  Accounts = >  "+user.getAccounts());
+    for (Account account : user.getAccounts()) {
+      AccountDto accountDto = AccountMapper.accountToDto(account);
+      accountDtos.add(accountDto);
     }
+    userDto.setAccounts(accountDtos);
+
+    return userDto;
+  }
+
+  public static User dtoToUser(UserDto userDto) {
+    User user = new User();
+    user.setId(userDto.getId());
+    user.setNameUser(userDto.getNameUser());
+    user.setEmail(userDto.getEmail());
+    user.setPassword(userDto.getPassword());
+    user.setDni(userDto.getDni());
+    user.setBirthday(userDto.getBirthday());
+    user.setAddress(userDto.getAddress());
+    user.setEnabled(userDto.isEnabled());
+
+    List<Account> accounts = new ArrayList<>();
+    for (AccountDto accountDto : userDto.getAccounts()) {
+      Account account = AccountMapper.dtoToAccount(accountDto);
+      accounts.add(account);
+    }
+    user.setAccounts(accounts);
+
+    return user;
+  }
 }

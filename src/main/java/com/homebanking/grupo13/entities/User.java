@@ -1,46 +1,51 @@
 package com.homebanking.grupo13.entities;
 
+
 import jakarta.persistence.*;
-import lombok.*;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "usuarios")
-@Getter
-@Setter
-@AllArgsConstructor
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "Users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(name = "usuario")
-    private String username;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "contrasenia")
-    private String password;
+  @Column(name = "name_User")
+  @NotNull
+  private String nameUser;
 
-    private String email;
+  private String email;
+  private String password;
 
-    private String dni;
+  @Column(unique = true, nullable = false)
+  private String dni;
+  private String birthday;
+  private String address;
 
-    @Column(name = "direccion")
-    private String address;
+  private boolean enabled;
 
-    @Column(name = "fecha_cumpleanios")
-    private Date birthday_date;
+  @CreationTimestamp
+  private LocalDateTime create_at;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Account> accounts;
-
-    // Fecha de creación y modificación (estado) de cada usuarios
-    // TODO: Refactor
-    private LocalDateTime created_at;
-
-    private LocalDateTime updated_at;
-
+  @UpdateTimestamp
+  private LocalDateTime update_at;
+ // relacion
+  @OneToMany(mappedBy = "owner")
+  private List<Account> accounts = new ArrayList<>();
 }
