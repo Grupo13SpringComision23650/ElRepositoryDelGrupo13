@@ -3,22 +3,22 @@ package com.homebanking.grupo13.mappers;
 import com.homebanking.grupo13.entities.Account;
 import com.homebanking.grupo13.entities.dtos.AccountDto;
 import lombok.experimental.UtilityClass;
-
+import com.homebanking.grupo13.entities.User;
 @UtilityClass
 public class AccountMapper {
-    public AccountDto accountToDto(Account account){
+    static public AccountDto accountToDto(Account account){
         AccountDto dto = new AccountDto();
-
         dto.setId(account.getId());
         dto.setType(account.getType());
         dto.setCbu(account.getCbu());
         dto.setAlias(account.getAlias());
         dto.setAmount(account.getAmount());
-
+        User owner=account.getOwner();
+        dto.setOwner_id(owner.getId());
         return dto;
     }
 
-    public Account dtoToAccount(AccountDto dto){
+    static public Account dtoToAccount(AccountDto dto){
         Account account = new Account();
 
         account.setAlias(dto.getAlias());

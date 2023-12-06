@@ -24,5 +24,5 @@ public class AccountDto {
 
     private BigDecimal amount;
 
-    private User owner;
+    private Long owner_id;
 }

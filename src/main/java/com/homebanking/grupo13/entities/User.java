@@ -2,6 +2,7 @@ package com.homebanking.grupo13.entities;
 
 
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -26,14 +27,18 @@ public class User {
   private Long id;
 
   @Column(name = "name_User")
+  @NotNull
   private String nameUser;
+
   private String email;
   private String password;
+
+  @Column(unique = true, nullable = false)
   private String dni;
   private String birthday;
   private String address;
 
-  private boolean status;
+  private boolean enabled;
 
   @CreationTimestamp
   private LocalDateTime create_at;

@@ -1,6 +1,7 @@
 package com.homebanking.grupo13.entities.dtos;
 
 import lombok.*;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class UserDto {
   private String dni;
   private String birthday;
   private String address;
-  private boolean status; // agregado
+  private boolean enabled; // agregado
 
   private List<AccountDto> accounts = new ArrayList<>();
 

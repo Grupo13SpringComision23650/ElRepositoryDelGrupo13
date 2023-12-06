@@ -12,6 +12,7 @@ import com.homebanking.grupo13.entities.enums.AccountType;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.homebanking.grupo13.mappers.AccountMapper;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -46,6 +47,8 @@ public class UserService {
 //crear user
   public UserDto createUser(UserDto userDto) {
     User user = UserMapper.dtoToUser(userDto);
+    user.setEnabled(true);
+    // Falta validaciones aca y en todos los services
     User savedUser = userRepository.save(user);
 
     //Deberia ser con service pero no funciono
@@ -70,9 +73,14 @@ public class UserService {
     account.setCreated_at(now);
     account.setUpdated_at(now);
     account.setOwner(savedUser);
-
     Account newAccount=accountRepository.save(account);
-    return UserMapper.userToDto(savedUser);
+
+
+    final AccountDto accountDto=AccountMapper.accountToDto(newAccount);
+    final UserDto savedUserDto=UserMapper.userToDto(savedUser);
+    savedUserDto.setAccounts(List.of(accountDto));
+
+    return savedUserDto;
   }
 
 // update user
@@ -87,7 +95,7 @@ public class UserService {
       existingUser.setDni(userDto.getDni());
       existingUser.setBirthday(userDto.getBirthday());
       existingUser.setAddress(userDto.getAddress());
-      existingUser.setStatus(userDto.isStatus());
+      existingUser.setEnabled(userDto.isEnabled());
 
       // Update accounts if needed
       List<Account> accounts = new ArrayList<>();

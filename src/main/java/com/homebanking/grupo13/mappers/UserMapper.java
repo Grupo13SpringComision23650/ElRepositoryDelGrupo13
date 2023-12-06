@@ -21,9 +21,11 @@ public class UserMapper {
     userDto.setDni(user.getDni());
     userDto.setBirthday(user.getBirthday());
     userDto.setAddress(user.getAddress());
-    userDto.setStatus(user.isStatus());
+    userDto.setEnabled(user.isEnabled());
 
     List<AccountDto> accountDtos = new ArrayList<>();
+    // accountsDtos da vacio
+    //System.out.println("  Accounts = >  "+user.getAccounts());
     for (Account account : user.getAccounts()) {
       AccountDto accountDto = AccountMapper.accountToDto(account);
       accountDtos.add(accountDto);
@@ -42,7 +44,7 @@ public class UserMapper {
     user.setDni(userDto.getDni());
     user.setBirthday(userDto.getBirthday());
     user.setAddress(userDto.getAddress());
-    user.setStatus(userDto.isStatus());
+    user.setEnabled(userDto.isEnabled());
 
     List<Account> accounts = new ArrayList<>();
     for (AccountDto accountDto : userDto.getAccounts()) {
