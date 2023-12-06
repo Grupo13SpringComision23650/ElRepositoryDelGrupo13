@@ -1,0 +1,32 @@
+<!-- Navigation -->
+<div th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light fixed-top">
+      <div class="container">
+        <a class="navbar-brand" th:href="@{/home}">Spring Banking G13</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="navbar-brand"> <spam> Hola </spam> </li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/registro}">Crear usuario</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/userlist}">Listar usuario</a></li>
+          </ul>
+        </div><!-- navbarResponsive -->
+
+      </div><!-- container -->
+    </nav><!-- Nav -->
+  </div><!-- fragment -->
+
+  <div th:fragment="footer">
+    <!-- Footer -->
+    <footer class="py-5 bg-dark text-light fixed-bottom" >
+      <div class="container">
+        <p class="m-0 text-center">Copyright &copy; Spring Banking 2023</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+  </div>
+
