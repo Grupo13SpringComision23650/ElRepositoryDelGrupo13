@@ -1,6 +1,7 @@
 package com.homebanking.grupo13.entities.dtos;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
@@ -24,6 +25,7 @@ public class UserDto {
   private String email;
 
   @NotBlank(message = "La Clave es necesaria")
+  @Min(value = 8,message = "La clave NO puede ser menos de 8 caracteres")
   private String password;
 
   @NotBlank(message = "EL DNI es necesario")
