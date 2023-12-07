@@ -25,7 +25,6 @@ public class UserDto {
   private String email;
 
   @NotBlank(message = "La Clave es necesaria")
-  @Min(value = 8,message = "La clave NO puede ser menos de 8 caracteres")
   private String password;
 
   @NotBlank(message = "EL DNI es necesario")

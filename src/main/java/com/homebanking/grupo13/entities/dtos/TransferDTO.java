@@ -1,11 +1,14 @@
 package com.homebanking.grupo13.entities.dtos;
 
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -14,12 +17,14 @@ public class TransferDTO {
 
     private Long id;
 
-    /* TODO: Implementar esto cuando Account (o User) este disponible
-    private Account accountSource;
-    private Account accountDestine;
-    */
+    @NotNull
+    private Long accountSourceId;
 
+    @NotNull
+    private Long accountDestineId;
+
+    @NotNull
     private BigDecimal amount;
 
-    private Timestamp createAt;
+    private LocalDateTime createAt;
 }

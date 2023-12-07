@@ -56,13 +56,14 @@ public class AccountService {
             }
 
             if (dto.getAmount() != null){
-                acc.setAmount(dto.getAmount());
+                acc.setAmount(acc.getAmount().add(dto.getAmount()));
             }
+            Account accountModified = repository.save(acc);
 
-            return AccountMapper.accountToDto(acc);
+            return AccountMapper.accountToDto(accountModified);
 
         } else {
-            return null;
+            throw new RuntimeException("Se ejecuto la rama del false en AccountService.updateAccount");
         }
     }
 
