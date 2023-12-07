@@ -83,8 +83,47 @@ public class UserService {
     return savedUserDto;
   }
 
+  public UserDto updateUser(Long id, UserDto dto) {
+    if (userRepository.existsById(id)){
+      User userToModify = userRepository.findById(id).get();
+
+      if (dto.getNameUser() != null){
+        userToModify.setNameUser(dto.getNameUser());
+      }
+
+      // TODO: agregar validacion de email existente
+      if (dto.getEmail() != null){
+        userToModify.setEmail(dto.getEmail());
+      }
+
+      if (dto.getPassword() != null){
+        userToModify.setPassword(dto.getPassword());
+      }
+
+      if (dto.getDni() != null){
+        userToModify.setDni(dto.getDni());
+      }
+
+      if (dto.getAddress() != null){
+        userToModify.setAddress(dto.getAddress());
+      }
+      if (dto.getBirthday() != null){
+        userToModify.setBirthday(dto.getBirthday());
+      }
+
+      userToModify.setUpdate_at(LocalDateTime.now());
+
+      User userModified = userRepository.save(userToModify);
+
+      return UserMapper.userToDto(userModified);
+    }
+
+    return null;
+  }
+
+
 // update user
-  public UserDto updateUser(UserDto userDto) {
+  /*public UserDto updateUser(UserDto userDto) {
     Optional<User> optionalUser = userRepository.findById(userDto.getId());
 
     if (optionalUser.isPresent()) {
@@ -114,7 +153,7 @@ public class UserService {
       // Handle case when user with given ID is not found
       return null;
     }
-  }
+  }*/
   // metodo delete no se hace porque no se puede borrar el user
   // estoy trabajando en el metodo para hacer automaticamente la cuenta al dar de alta un usar..
 

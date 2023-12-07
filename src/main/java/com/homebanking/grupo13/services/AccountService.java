@@ -58,8 +58,8 @@ public class AccountService {
             if (dto.getAmount() != null){
                 acc.setAmount(dto.getAmount());
             }
-
-            return AccountMapper.accountToDto(acc);
+            Account accountModified = repository.save(acc);
+            return AccountMapper.accountToDto(accountModified);
 
         } else {
             return null;
