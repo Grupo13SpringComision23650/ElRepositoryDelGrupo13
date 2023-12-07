@@ -2,6 +2,8 @@ package com.homebanking.grupo13.entities.dtos;
 
 import com.homebanking.grupo13.entities.User;
 import com.homebanking.grupo13.entities.enums.AccountType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,13 +18,19 @@ import java.math.BigDecimal;
 public class AccountDto {
     private Long id;
 
+    @NotBlank(message = "El tipo es necesario")
     private AccountType type;
 
+    @NotBlank(message = "El CBU es necesario")
+    @Pattern(regexp="\\d{22}",message = "EL CBU es un numero de 22 digitos")
     private String cbu;
 
+    @NotBlank(message = "El Alias es necesario")
     private String alias;
 
+    @NotBlank(message = "La Cantidad es necesario")
     private BigDecimal amount;
 
+    @NotBlank(message = "El onwer_id es necesario")
     private Long owner_id;
 }
