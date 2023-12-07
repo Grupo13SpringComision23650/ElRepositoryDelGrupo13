@@ -26,8 +26,8 @@ public class UserDto {
   @NotBlank(message = "La Clave es necesaria")
   private String password;
 
-  @NotBlank(message = "EL DNI es necesaria")
-  @Pattern(regexp="\\d{4,8}",message = "El documento debe tener entre 6 y 8 digitos")
+  @NotBlank(message = "EL DNI es necesario")
+  @Pattern(regexp="\\d{6,8}",message = "El documento debe tener entre 6 y 8 digitos")
   private String dni;
 
   private String birthday;
