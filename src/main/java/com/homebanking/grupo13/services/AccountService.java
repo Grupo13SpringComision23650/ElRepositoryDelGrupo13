@@ -5,6 +5,7 @@ import com.homebanking.grupo13.entities.dtos.AccountDto;
 import com.homebanking.grupo13.entities.enums.AccountType;
 import com.homebanking.grupo13.mappers.AccountMapper;
 import com.homebanking.grupo13.repositories.AccountRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -38,7 +39,7 @@ public class AccountService {
         return AccountMapper.accountToDto(repository.save(newAccount));
     }
 
-
+@Transactional
     public AccountDto updateAccount(Long id, AccountDto dto) {
         if (repository.existsById(id)){
             Account acc =  repository.findById(id).get();
