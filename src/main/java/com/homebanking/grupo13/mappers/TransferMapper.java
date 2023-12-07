@@ -3,7 +3,12 @@ package com.homebanking.grupo13.mappers;
 
 import com.homebanking.grupo13.entities.Transfer;
 import com.homebanking.grupo13.entities.dtos.TransferDTO;
+import com.homebanking.grupo13.repositories.AccountRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 
 @UtilityClass
@@ -13,13 +18,9 @@ public class TransferMapper {
         Transfer transfer = new Transfer();
         transfer.setId(dto.getId());
         transfer.setAmount(dto.getAmount());
+        transfer.setAccountSourceId(dto.getAccountSourceId());
+        transfer.setAccountDestineId(dto.getAccountDestineId());
 
-        /*  TODO: Implementar esto cuando Account (o User) este disponible
-        transfer.setSource(dto.getSource());
-        transfer.setDestine(dto.getDestine());
-        */
-
-        transfer.setCreateAt(dto.getCreateAt());
         return transfer;
     }
 
@@ -27,13 +28,9 @@ public class TransferMapper {
         TransferDTO dto = new TransferDTO();
         dto.setId(transfer.getId());
         dto.setAmount(transfer.getAmount());
+        dto.setAccountSourceId(transfer.getAccountSourceId());
+        dto.setAccountDestineId(transfer.getAccountDestineId());
 
-        /* TODO: Implementar esto cuando Account (o User) este disponible
-        dto.setSource(transfer.getSource());
-        dto.setDestine(transfer.getDestine());
-        */
-
-        dto.setCreateAt(transfer.getCreateAt());
         return dto;
     }
 }

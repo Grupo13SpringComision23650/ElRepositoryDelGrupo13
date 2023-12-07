@@ -3,6 +3,7 @@ package com.homebanking.grupo13.controllers;
 
 import com.homebanking.grupo13.entities.dtos.AccountDto;
 import com.homebanking.grupo13.services.AccountService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,12 +30,12 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<AccountDto> createAccount(@RequestBody AccountDto account){
+    public ResponseEntity<AccountDto> createAccount(@Valid @RequestBody AccountDto account){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createAccount(account));
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<AccountDto> updateAccount(@PathVariable Long id, @RequestBody AccountDto account){
+    public ResponseEntity<AccountDto> updateAccount(@Valid @PathVariable Long id, @RequestBody AccountDto account){
         return ResponseEntity.status(HttpStatus.OK).body(service.updateAccount(id, account));
     }
 

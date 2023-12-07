@@ -17,7 +17,9 @@ public class UserMapper {
     userDto.setId(user.getId());
     userDto.setNameUser(user.getNameUser());
     userDto.setEmail(user.getEmail());
-    userDto.setPassword(user.getPassword());
+    // Consigna 9) "no se debe mostrar la contrasena"
+    //userDto.setPassword(user.getPassword());
+    userDto.setPassword("*************");
     userDto.setDni(user.getDni());
     userDto.setBirthday(user.getBirthday());
     userDto.setAddress(user.getAddress());

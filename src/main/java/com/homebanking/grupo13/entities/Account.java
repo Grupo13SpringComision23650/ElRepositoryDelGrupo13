@@ -24,11 +24,13 @@ public class Account {
     @Column(name = "tipo_cuenta")
     private AccountType type;
 
+    @Column(unique = true, nullable = false)
     private String cbu;
 
+    @Column(unique = true, nullable = false)
     private String alias;
 
-    @Column(name = "monto")
+    @Column(name = "monto", nullable = false )
     private BigDecimal amount;
 
     @Column(name = "fecha_creacion")
