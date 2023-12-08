@@ -51,18 +51,6 @@ public class UserService {
     // Falta validaciones aca y en todos los services
     User savedUser = userRepository.save(user);
 
-    //Deberia ser con service pero no funciono
-  /*
-    AccountDto dto=new AccountDto();
-
-    dto.setType(AccountType.CAJA_AHORRO_PESOS);
-    dto.setAmount(BigDecimal.ZERO);
-    dto.setAlias("al.ias."+Math.random()*100);
-    dto.setCbu("c.b.u."+Math.random()*100);
-    dto.setOwner(savedUser);
-    accountService.createAccount(dto);
-*/
-
     // esto FUNCIONO !
     final LocalDateTime now=LocalDateTime.now();
     Account account=new Account();
@@ -84,7 +72,7 @@ public class UserService {
   }
 
 // update user
-  public UserDto updateUser(UserDto userDto) {
+  /*public UserDto updateUser(UserDto userDto) {
     Optional<User> optionalUser = userRepository.findById(userDto.getId());
 
     if (optionalUser.isPresent()) {
@@ -114,10 +102,45 @@ public class UserService {
       // Handle case when user with given ID is not found
       return null;
     }
-  }
-  // metodo delete no se hace porque no se puede borrar el user
-  // estoy trabajando en el metodo para hacer automaticamente la cuenta al dar de alta un usar..
+  }*/
 
+  public UserDto updateUser(Long id, UserDto dto) {
+    if (userRepository.existsById(id)){
+      User userToModify = userRepository.findById(id).get();
+
+      if (dto.getNameUser() != null){
+        userToModify.setNameUser(dto.getNameUser());
+      }
+
+      // TODO: agregar validacion de email existente
+      if (dto.getEmail() != null){
+        userToModify.setEmail(dto.getEmail());
+      }
+
+      if (dto.getPassword() != null){
+        userToModify.setPassword(dto.getPassword());
+      }
+
+      if (dto.getDni() != null){
+        userToModify.setDni(dto.getDni());
+      }
+
+      if (dto.getAddress() != null){
+        userToModify.setAddress(dto.getAddress());
+      }
+      if (dto.getBirthday() != null){
+        userToModify.setBirthday(dto.getBirthday());
+      }
+
+      userToModify.setUpdate_at(LocalDateTime.now());
+
+      User userModified = userRepository.save(userToModify);
+
+      return UserMapper.userToDto(userModified);
+    }
+
+    return null;
+  }
   public void deleteUser(Long id){
     userRepository.deleteById(id);
   }
