@@ -1,10 +1,13 @@
 package com.homebanking.grupo13.services;
 
 import com.homebanking.grupo13.entities.Account;
+import com.homebanking.grupo13.entities.User;
 import com.homebanking.grupo13.entities.dtos.AccountDto;
 import com.homebanking.grupo13.entities.enums.AccountType;
 import com.homebanking.grupo13.mappers.AccountMapper;
 import com.homebanking.grupo13.repositories.AccountRepository;
+import com.homebanking.grupo13.repositories.IUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,8 +18,12 @@ import java.util.stream.Collectors;
 public class AccountService {
     private final AccountRepository repository;
 
-    private AccountService(AccountRepository repository){
+
+    private IUserRepository userRepository;
+
+    private AccountService(AccountRepository repository,IUserRepository userRepository){
         this.repository = repository;
+        this.userRepository=userRepository;
     }
 
     public AccountDto getAccountById(Long id) {
@@ -31,11 +38,14 @@ public class AccountService {
     }
 
     public AccountDto createAccount(AccountDto dto) {
-        dto.setAmount(BigDecimal.ZERO);
-        // TODO: REFACTOR para crear diferentes tipos de cuenta inicial
-        dto.setType(AccountType.CAJA_AHORRO_PESOS);
+
         Account newAccount = AccountMapper.dtoToAccount(dto);
-        return AccountMapper.accountToDto(repository.save(newAccount));
+
+        User owner=userRepository.getReferenceById(dto.getOwner_id());
+        newAccount.setOwner(owner);
+
+        Account accountSaved=repository.save(newAccount);
+        return AccountMapper.accountToDto(accountSaved);
     }
 
 
@@ -67,7 +77,7 @@ public class AccountService {
         }
     }
 
-
+    // TODO: Deshabilitar la cuenta (no eliminar)
     public String deleteAccount(Long id) {
         if (repository.existsById(id)){
             repository.deleteById(id);

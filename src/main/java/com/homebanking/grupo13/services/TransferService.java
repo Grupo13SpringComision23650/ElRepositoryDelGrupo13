@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class TransferService {
+    @Autowired
     private AccountRepository accountRepository;
 
     @Autowired
