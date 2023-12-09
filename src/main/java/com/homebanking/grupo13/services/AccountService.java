@@ -4,9 +4,13 @@ import com.homebanking.grupo13.entities.Account;
 import com.homebanking.grupo13.entities.User;
 import com.homebanking.grupo13.entities.dtos.AccountDto;
 import com.homebanking.grupo13.entities.enums.AccountType;
+import com.homebanking.grupo13.exceptions.AccountNotFoundException;
+import com.homebanking.grupo13.exceptions.UserNotFoundException;
 import com.homebanking.grupo13.mappers.AccountMapper;
+import com.homebanking.grupo13.mappers.UserMapper;
 import com.homebanking.grupo13.repositories.AccountRepository;
 import com.homebanking.grupo13.repositories.IUserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +20,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
-    private final AccountRepository repository;
+    @Autowired
+    private AccountRepository repository;
 
-
+    @Autowired
     private IUserRepository userRepository;
 
     private AccountService(AccountRepository repository,IUserRepository userRepository){
@@ -78,13 +83,13 @@ public class AccountService {
     }
 
     // TODO: Deshabilitar la cuenta (no eliminar)
-    public String deleteAccount(Long id) {
-        if (repository.existsById(id)){
-            repository.deleteById(id);
-            return "Cuenta eliminada";
-        } else {
-            return "No se pudo eliminar la cuenta";
-        }
+    public AccountDto deleteAccount(Long id) {
+        Account account = repository.findById(id)
+                .orElseThrow(()->new AccountNotFoundException("Cuenta no encontrada"));
+
+        account.setEnabled(false);
+        Account accountSaved=repository.save(account);
+        return AccountMapper.accountToDto(accountSaved);
     }
 
 }

@@ -4,6 +4,7 @@ package com.homebanking.grupo13.controllers;
 import com.homebanking.grupo13.entities.dtos.TransferDTO;
 import com.homebanking.grupo13.services.TransferService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/transfers")
+@AllArgsConstructor
 public class TransferController {
 
-    @Autowired
-    private TransferService service;
+    private final TransferService service;
 
     @GetMapping
     public ResponseEntity<List<TransferDTO>> getTransfers() {

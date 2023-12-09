@@ -3,6 +3,7 @@ package com.homebanking.grupo13.controllers;
 import com.homebanking.grupo13.entities.dtos.AccountDto;
 import com.homebanking.grupo13.services.AccountService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/accounts")
+@AllArgsConstructor
 public class AccountController {
-    private final AccountService service;
 
-    private AccountController(AccountService service){
-        this.service = service;
-    }
+    private AccountService service;
 
     @GetMapping
     public ResponseEntity<List<AccountDto>> getAccounts(){
@@ -39,7 +38,7 @@ public class AccountController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> deleteAccount(@PathVariable Long id){
+    public ResponseEntity<AccountDto> deleteAccount(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(service.deleteAccount(id));
     }
 
