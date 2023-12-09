@@ -103,48 +103,31 @@ public class UserService {
     User user = userRepository.findById(userDto.getId())
             .orElseThrow(()->new UserNotFoundException("Usuario no encontrado"));
 
-    if(user.getNameUser()!=null) {
+    if(userDto.getNameUser()!=null) {
       user.setNameUser(userDto.getNameUser());
     }
-    if(user.getEmail()!=null) {
+    if(userDto.getEmail()!=null) {
       user.setEmail(userDto.getEmail());
     }
-    if(user.getPassword() != null) {
+    if(userDto.getPassword() != null) {
       user.setPassword(userDto.getPassword());
     }
-    if(user.getDni() != null) {
+    if(userDto.getDni() != null) {
       user.setDni(userDto.getDni());
     }
-    if(user.getBirthday() != null) {
+    if(userDto.getBirthday() != null) {
       user.setBirthday(userDto.getBirthday());
     }
-    if(user.getAddress() != null) {
+    if(userDto.getAddress() != null) {
       user.setAddress(userDto.getAddress());
     }
-    user.setEnabled(userDto.isEnabled());
-    System.out.println("UserAccount.updateUser.updatedUser:user.getAccounts() => "+user.getAccounts());
+    if(userDto.getEnabled() != null){
+      user.setEnabled(userDto.getEnabled());
+    }
+
     // TODO: si accounts (dto) es enviado por el usuario, son agregados a la lista de accounts
 
-    // Update accounts if needed
-    // Aca tengo un problema
-    /*
-    List<Account> accounts=user.getAccounts();
-    if (userDto.getAccounts() != null) {
-      List<Account> user
-      List<Account> accounts = new ArrayList<>();
-      for (AccountDto accountDto : userDto.getAccounts()) {
-        Account account = AccountMapper.dtoToAccount(accountDto);
-        account.setOwner(user);
-        account.setEnabled(user.isEnabled());
-        accounts.add(account);
-      }
-      user.setAccounts(accounts);
-    }else{
-      for (Account account : user.getAccounts()) {
-        account.setEnabled(user.isEnabled());
-      }
-    }
-     */
+
     for(Account acc:user.getAccounts()) {
       acc.setEnabled(true);
     }

@@ -32,7 +32,7 @@ public class AccountDto {
     @NotNull(message = "La cantidad es necesaria")
     private BigDecimal amount;
 
-    private boolean enabled;
+    private Boolean enabled;
 
     @NotNull(message = "El onwer_id es necesario")
     private Long owner_id;

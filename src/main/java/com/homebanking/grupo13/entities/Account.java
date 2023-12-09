@@ -38,13 +38,12 @@ public class Account {
     private BigDecimal amount;
 
     @CreationTimestamp
-    private Timestamp created_at;
+    private Timestamp create_at;
 
     @UpdateTimestamp
-    private Timestamp updated_at;
+    private Timestamp update_at;
 
-    @ColumnDefault("false")
-    private boolean enabled;
+    private Boolean enabled;
 
     @ManyToOne
     private User owner;

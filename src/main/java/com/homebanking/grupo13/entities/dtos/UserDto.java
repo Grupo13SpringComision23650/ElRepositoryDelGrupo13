@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +32,11 @@ public class UserDto {
 
   private String address;
 
-  private boolean enabled; // agregado
+  private Boolean enabled; // agregado
 
   private List<AccountDto> accounts = new ArrayList<>();
 
+  private LocalDateTime create_at;
+
+  private LocalDateTime update_at;
 }

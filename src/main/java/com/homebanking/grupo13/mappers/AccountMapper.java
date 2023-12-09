@@ -18,7 +18,7 @@ public class AccountMapper {
         dto.setCbu(account.getCbu());
         dto.setAlias(account.getAlias());
         dto.setAmount(account.getAmount());
-        dto.setEnabled(account.isEnabled());
+        dto.setEnabled(account.getEnabled());
         User owner=account.getOwner();
         dto.setOwner_id(owner.getId());
 
@@ -31,7 +31,7 @@ public class AccountMapper {
         account.setAlias(dto.getAlias());
         account.setType(dto.getType());
         account.setCbu(dto.getCbu());
-        account.setEnabled(dto.isEnabled());
+        account.setEnabled(dto.getEnabled());
         account.setAmount(dto.getAmount());
 
         return account;

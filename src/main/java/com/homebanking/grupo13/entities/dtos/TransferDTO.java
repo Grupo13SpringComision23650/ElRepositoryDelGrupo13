@@ -26,5 +26,7 @@ public class TransferDTO {
     @NotNull
     private BigDecimal amount;
 
-    private LocalDateTime createAt;
+    private Timestamp created_at;
+
+    private Timestamp updated_at;
 }

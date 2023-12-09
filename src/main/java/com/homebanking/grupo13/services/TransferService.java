@@ -65,8 +65,8 @@ public class TransferService {
         transfer.setAccountSourceId(accountSource.getId());
         transfer.setAccountDestineId(accountDestine.getId());
         transfer.setAmount(dto.getAmount());
-        transfer = transferRepository.save(transfer);
+        Transfer savedTransfer = transferRepository.save(transfer);
 
-        return TransferMapper.transferToDto(transfer);
+        return TransferMapper.transferToDto(savedTransfer);
     }
 }
