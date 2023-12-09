@@ -125,26 +125,6 @@ public class UserService {
     System.out.println("UserAccount.updateUser.updatedUser:user.getAccounts() => "+user.getAccounts());
     // TODO: si accounts (dto) es enviado por el usuario, son agregados a la lista de accounts
 
-    // Update accounts if needed
-    // Aca tengo un problema
-    /*
-    List<Account> accounts=user.getAccounts();
-    if (userDto.getAccounts() != null) {
-      List<Account> user
-      List<Account> accounts = new ArrayList<>();
-      for (AccountDto accountDto : userDto.getAccounts()) {
-        Account account = AccountMapper.dtoToAccount(accountDto);
-        account.setOwner(user);
-        account.setEnabled(user.isEnabled());
-        accounts.add(account);
-      }
-      user.setAccounts(accounts);
-    }else{
-      for (Account account : user.getAccounts()) {
-        account.setEnabled(user.isEnabled());
-      }
-    }
-     */
     for(Account acc:user.getAccounts()) {
       acc.setEnabled(true);
     }
