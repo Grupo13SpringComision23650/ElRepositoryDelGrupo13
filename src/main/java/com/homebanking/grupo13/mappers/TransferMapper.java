@@ -3,12 +3,7 @@ package com.homebanking.grupo13.mappers;
 
 import com.homebanking.grupo13.entities.Transfer;
 import com.homebanking.grupo13.entities.dtos.TransferDTO;
-import com.homebanking.grupo13.repositories.AccountRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 
 @UtilityClass

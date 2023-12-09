@@ -10,22 +10,13 @@ import com.homebanking.grupo13.mappers.UserMapper;
 import com.homebanking.grupo13.repositories.AccountRepository;
 import com.homebanking.grupo13.repositories.IUserRepository;
 import com.homebanking.grupo13.entities.enums.AccountType;
-import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.homebanking.grupo13.mappers.AccountMapper;
-import org.springframework.transaction.annotation.Propagation;
-
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.time.LocalDateTime;
+
 
 @Service
 public class UserService {
@@ -53,8 +44,6 @@ public class UserService {
             .map(UserMapper::userToDto)
             .collect(Collectors.toList());
   }
-
-
   public UserDto createUser(UserDto userDto) {
     User user=null;
     Optional<User> optionalUser=userRepository.findByDni(userDto.getDni());
@@ -64,13 +53,6 @@ public class UserService {
       user=optionalUser.get();
       userDto.setEnabled(true);
       userDto.setId(user.getId());
-      /*
-      userDto.setAccounts(user.getAccounts()
-              .stream()
-              .map(AccountMapper::accountToDto)
-              .collect(Collectors.toList()));
-
-       */
       return this.updateUser(userDto);
     }
 

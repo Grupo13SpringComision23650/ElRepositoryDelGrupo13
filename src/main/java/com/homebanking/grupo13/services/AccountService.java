@@ -3,18 +3,13 @@ package com.homebanking.grupo13.services;
 import com.homebanking.grupo13.entities.Account;
 import com.homebanking.grupo13.entities.User;
 import com.homebanking.grupo13.entities.dtos.AccountDto;
-import com.homebanking.grupo13.entities.enums.AccountType;
 import com.homebanking.grupo13.exceptions.AccountNotFoundException;
-import com.homebanking.grupo13.exceptions.UserNotFoundException;
 import com.homebanking.grupo13.mappers.AccountMapper;
-import com.homebanking.grupo13.mappers.UserMapper;
 import com.homebanking.grupo13.repositories.AccountRepository;
 import com.homebanking.grupo13.repositories.IUserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 

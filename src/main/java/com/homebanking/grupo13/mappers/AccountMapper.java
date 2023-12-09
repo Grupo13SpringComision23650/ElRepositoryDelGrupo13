@@ -1,11 +1,9 @@
 package com.homebanking.grupo13.mappers;
 
 import com.homebanking.grupo13.entities.Account;
-import com.homebanking.grupo13.entities.dtos.AccountDto;
-import com.homebanking.grupo13.repositories.IUserRepository;
-import lombok.experimental.UtilityClass;
 import com.homebanking.grupo13.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.homebanking.grupo13.entities.dtos.AccountDto;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class AccountMapper {
