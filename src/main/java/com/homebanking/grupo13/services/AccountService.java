@@ -44,6 +44,7 @@ public class AccountService {
         User owner=userRepository.getReferenceById(dto.getOwner_id());
         newAccount.setOwner(owner);
 
+        newAccount.setEnabled(true);
         Account accountSaved=repository.save(newAccount);
         return AccountMapper.accountToDto(accountSaved);
     }
@@ -63,6 +64,9 @@ public class AccountService {
 
             if (dto.getCbu() != null){
                 acc.setCbu(dto.getCbu());
+            }
+            if(dto.getEnabled() != null ) {
+                acc.setEnabled(dto.getEnabled());
             }
 
             if (dto.getAmount() != null){
@@ -89,5 +93,4 @@ public class AccountService {
         Account accountSaved=repository.save(account);
         return AccountMapper.accountToDto(accountSaved);
     }
-
 }
