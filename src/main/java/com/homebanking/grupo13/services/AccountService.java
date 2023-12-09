@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 @Service
 public class AccountService {
     @Autowired
-    private AccountRepository repository;
+    private final AccountRepository repository;
 
     @Autowired
-    private IUserRepository userRepository;
+    private final IUserRepository userRepository;
 
     private AccountService(AccountRepository repository,IUserRepository userRepository){
         this.repository = repository;
