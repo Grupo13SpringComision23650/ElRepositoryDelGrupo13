@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -24,5 +26,7 @@ public class TransferDTO {
     @NotNull
     private BigDecimal amount;
 
-    private LocalDateTime createAt;
+    private LocalDateTime created_at;
+
+    private LocalDateTime updated_at;
 }

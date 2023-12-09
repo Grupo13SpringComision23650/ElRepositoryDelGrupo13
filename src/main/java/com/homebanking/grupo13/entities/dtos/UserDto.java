@@ -3,6 +3,7 @@ package com.homebanking.grupo13.entities.dtos;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,11 @@ public class UserDto {
 
   private String address;
 
-  private boolean enabled; // agregado
+  private Boolean enabled; // agregado
+
+  private LocalDateTime created_at;
+
+  private LocalDateTime updated_at;
 
   private List<AccountDto> accounts = new ArrayList<>();
 

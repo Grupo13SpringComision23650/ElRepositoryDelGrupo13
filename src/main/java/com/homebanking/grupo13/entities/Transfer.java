@@ -11,6 +11,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "transfers")
@@ -34,8 +36,8 @@ public class Transfer {
     private BigDecimal amount;
 
     @CreationTimestamp
-    private Timestamp create_at;
+    private LocalDateTime created_at;
 
     @UpdateTimestamp
-    private Timestamp update_at;
+    private LocalDateTime updated_at;
 }

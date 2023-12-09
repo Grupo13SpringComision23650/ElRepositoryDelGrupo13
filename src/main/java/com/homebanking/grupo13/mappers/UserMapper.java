@@ -6,6 +6,7 @@ import com.homebanking.grupo13.entities.dtos.AccountDto;
 import com.homebanking.grupo13.entities.dtos.UserDto;
 import lombok.experimental.UtilityClass;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +18,14 @@ public class UserMapper {
     userDto.setId(user.getId());
     userDto.setNameUser(user.getNameUser());
     userDto.setEmail(user.getEmail());
-    // Consigna 9) "no se debe mostrar la contrasena"
-    //userDto.setPassword(user.getPassword());
     userDto.setPassword("*************");
     userDto.setDni(user.getDni());
     userDto.setBirthday(user.getBirthday());
     userDto.setAddress(user.getAddress());
     userDto.setEnabled(user.isEnabled());
+    userDto.setCreated_at(user.getCreated_at());
+    userDto.setUpdated_at(user.getUpdated_at());
+
 
     List<AccountDto> accountDtos = new ArrayList<>();
     for (Account account : user.getAccounts()) {
@@ -45,7 +47,10 @@ public class UserMapper {
     user.setDni(userDto.getDni());
     user.setBirthday(userDto.getBirthday());
     user.setAddress(userDto.getAddress());
-    user.setEnabled(userDto.isEnabled());
+    user.setEnabled(userDto.getEnabled());
+    user.setCreated_at(LocalDateTime.now());
+    user.setUpdated_at(LocalDateTime.now());
+
 
     List<Account> accounts = new ArrayList<>();
     for (AccountDto accountDto : userDto.getAccounts()) {

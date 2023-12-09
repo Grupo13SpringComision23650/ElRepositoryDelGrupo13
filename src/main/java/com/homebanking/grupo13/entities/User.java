@@ -10,7 +10,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -38,16 +40,17 @@ public class User {
   private Long dni;
 
   private String birthday;
+
   private String address;
 
   @ColumnDefault(value = "0")
   private boolean enabled;
 
   @CreationTimestamp
-  private Timestamp create_at;
+  private LocalDateTime created_at;
 
   @UpdateTimestamp
-  private Timestamp update_at;
+  private LocalDateTime  updated_at;
 
   @OneToMany(mappedBy = "owner")
   private List<Account> accounts = new ArrayList<>();

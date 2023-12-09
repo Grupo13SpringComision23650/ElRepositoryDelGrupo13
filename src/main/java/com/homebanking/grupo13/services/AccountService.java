@@ -68,6 +68,9 @@ public class AccountService {
             if (dto.getAmount() != null){
                 acc.setAmount(acc.getAmount().add(dto.getAmount()));
             }
+            if (dto.getEnabled() != null){
+                acc.setEnabled(dto.getEnabled());
+            }
             Account accountModified = repository.save(acc);
 
             return AccountMapper.accountToDto(accountModified);

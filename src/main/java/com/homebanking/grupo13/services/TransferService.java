@@ -10,7 +10,6 @@ import com.homebanking.grupo13.exceptions.TransferNotFoundException;
 import com.homebanking.grupo13.mappers.TransferMapper;
 import com.homebanking.grupo13.repositories.AccountRepository;
 import com.homebanking.grupo13.repositories.TransferRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +22,7 @@ public class TransferService {
     private AccountRepository accountRepository;
     @Autowired
     private TransferRepository transferRepository;
+
 
     public List<TransferDTO> getTransfers() {
         return transferRepository
@@ -39,19 +39,19 @@ public class TransferService {
         return TransferMapper.transferToDto(transfer);
     }
 
-    @Transactional(rollbackOn = Exception.class)
+    //@Transactional(rollbackOn = Exception.class)
     public TransferDTO createTransfer(TransferDTO dto) {
         // Verificar que existen ambas cuentas
         Account accountSource = accountRepository.findById(dto.getAccountSourceId())
                 .orElseThrow(() -> new AccountNotFoundException("Cuenta origen no encontrado"));
         Account accountDestine = accountRepository.findById(dto.getAccountDestineId())
                 .orElseThrow(() -> new AccountNotFoundException("Cuenta destino no encontrado"));
-
         // Chequear que la cuenta origen tenga fondos suficiente
         if (accountSource.getAmount().compareTo(dto.getAmount()) < 0) {
             throw new InvalidTransferException("Fondos insuficientes");
+        } if(!accountSource.getEnabled() || !accountDestine.getEnabled()) {
+            throw new InvalidTransferException("Cuenta desabilitada");
         }
-
         // Operacion arimetica entre cuentas
         accountSource.setAmount(accountSource.getAmount().subtract(dto.getAmount()));
         accountDestine.setAmount(accountDestine.getAmount().add(dto.getAmount()));

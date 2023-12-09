@@ -85,25 +85,27 @@ public class UserService {
     User user = userRepository.findById(userDto.getId())
             .orElseThrow(()->new UserNotFoundException("Usuario no encontrado"));
 
-    if(user.getNameUser()!=null) {
+    if(userDto.getNameUser()!=null) {
       user.setNameUser(userDto.getNameUser());
     }
-    if(user.getEmail()!=null) {
+    if(userDto.getEmail()!=null) {
       user.setEmail(userDto.getEmail());
     }
-    if(user.getPassword() != null) {
+    if(userDto.getPassword() != null) {
       user.setPassword(userDto.getPassword());
     }
-    if(user.getDni() != null) {
+    if(userDto.getDni() != null) {
       user.setDni(userDto.getDni());
     }
-    if(user.getBirthday() != null) {
+    if(userDto.getBirthday() != null) {
       user.setBirthday(userDto.getBirthday());
     }
-    if(user.getAddress() != null) {
+    if(userDto.getAddress() != null) {
       user.setAddress(userDto.getAddress());
     }
-    user.setEnabled(userDto.isEnabled());
+    if(userDto.getEnabled() !=null){
+      user.setEnabled(userDto.getEnabled());
+    }
     System.out.println("UserAccount.updateUser.updatedUser:user.getAccounts() => "+user.getAccounts());
     // TODO: si accounts (dto) es enviado por el usuario, son agregados a la lista de accounts
 

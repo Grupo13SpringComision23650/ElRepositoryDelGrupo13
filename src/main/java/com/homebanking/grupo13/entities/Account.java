@@ -43,8 +43,8 @@ public class Account {
     @UpdateTimestamp
     private Timestamp updated_at;
 
-    @ColumnDefault("false")
-    private boolean enabled;
+    @ColumnDefault("true")
+    private Boolean enabled;
 
     @ManyToOne
     private User owner;
