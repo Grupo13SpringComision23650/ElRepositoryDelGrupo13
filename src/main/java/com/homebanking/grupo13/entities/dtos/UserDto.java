@@ -1,8 +1,9 @@
 package com.homebanking.grupo13.entities.dtos;
 
+import jakarta.validation.constraints.*;
 import lombok.*;
-import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +13,28 @@ import java.util.List;
 public class UserDto {
 
   private Long id;
+
+  @NotBlank(message = "El Nombre de usuario es necesario")
   private String nameUser;
+
+  @NotBlank(message = "El Email es necesario")
+  @Email(message="Email invalido")
   private String email;
+
+  @NotBlank(message = "La Clave es necesaria")
   private String password;
-  private String dni;
+
+  private Long dni;
+
   private String birthday;
+
   private String address;
-  private boolean enabled; // agregado
+
+  private Boolean enabled; // agregado
+
+  private LocalDateTime created_at;
+
+  private LocalDateTime updated_at;
 
   private List<AccountDto> accounts = new ArrayList<>();
 

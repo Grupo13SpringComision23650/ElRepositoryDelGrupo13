@@ -5,6 +5,8 @@ import com.homebanking.grupo13.entities.Transfer;
 import com.homebanking.grupo13.entities.dtos.TransferDTO;
 import lombok.experimental.UtilityClass;
 
+import java.time.LocalDateTime;
+
 
 @UtilityClass
 public class TransferMapper {
@@ -13,27 +15,23 @@ public class TransferMapper {
         Transfer transfer = new Transfer();
         transfer.setId(dto.getId());
         transfer.setAmount(dto.getAmount());
+        transfer.setAccountSourceId(dto.getAccountSourceId());
+        transfer.setAccountDestineId(dto.getAccountDestineId());
+        transfer.setCreated_at(LocalDateTime.now());
+        transfer.setUpdated_at(LocalDateTime.now());
 
-        /*  TODO: Implementar esto cuando Account (o User) este disponible
-        transfer.setSource(dto.getSource());
-        transfer.setDestine(dto.getDestine());
-        */
 
-        transfer.setCreateAt(dto.getCreateAt());
         return transfer;
     }
-
     public static TransferDTO transferToDto(Transfer transfer) {
         TransferDTO dto = new TransferDTO();
         dto.setId(transfer.getId());
         dto.setAmount(transfer.getAmount());
+        dto.setAccountSourceId(transfer.getAccountSourceId());
+        dto.setAccountDestineId(transfer.getAccountDestineId());
+        dto.setCreated_at(LocalDateTime.now());
+        dto.setUpdated_at(LocalDateTime.now());
 
-        /* TODO: Implementar esto cuando Account (o User) este disponible
-        dto.setSource(transfer.getSource());
-        dto.setDestine(transfer.getDestine());
-        */
-
-        dto.setCreateAt(transfer.getCreateAt());
         return dto;
     }
 }

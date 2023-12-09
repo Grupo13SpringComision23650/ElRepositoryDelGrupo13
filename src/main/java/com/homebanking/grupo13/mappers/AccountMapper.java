@@ -1,11 +1,14 @@
 package com.homebanking.grupo13.mappers;
 
 import com.homebanking.grupo13.entities.Account;
+import com.homebanking.grupo13.entities.User;
 import com.homebanking.grupo13.entities.dtos.AccountDto;
 import lombok.experimental.UtilityClass;
-import com.homebanking.grupo13.entities.User;
+
 @UtilityClass
 public class AccountMapper {
+
+
     static public AccountDto accountToDto(Account account){
         AccountDto dto = new AccountDto();
         dto.setId(account.getId());
@@ -13,17 +16,19 @@ public class AccountMapper {
         dto.setCbu(account.getCbu());
         dto.setAlias(account.getAlias());
         dto.setAmount(account.getAmount());
+        dto.setEnabled(account.getEnabled());
         User owner=account.getOwner();
         dto.setOwner_id(owner.getId());
+
         return dto;
     }
-
     static public Account dtoToAccount(AccountDto dto){
         Account account = new Account();
 
         account.setAlias(dto.getAlias());
         account.setType(dto.getType());
         account.setCbu(dto.getCbu());
+        account.setEnabled(dto.getEnabled());
         account.setAmount(dto.getAmount());
 
         return account;
