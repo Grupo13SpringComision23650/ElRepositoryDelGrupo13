@@ -1,9 +1,10 @@
 package com.homebanking.grupo13.entities.dtos;
 
-import jakarta.validation.constraints.*;
-import lombok.*;
-import org.hibernate.validator.constraints.Range;
-import org.springframework.validation.annotation.Validated;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

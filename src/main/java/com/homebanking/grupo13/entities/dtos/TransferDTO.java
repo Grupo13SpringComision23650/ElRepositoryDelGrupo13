@@ -1,14 +1,12 @@
 package com.homebanking.grupo13.entities.dtos;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

@@ -1,6 +1,5 @@
 package com.homebanking.grupo13.entities.dtos;
 
-import com.homebanking.grupo13.entities.User;
 import com.homebanking.grupo13.entities.enums.AccountType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
