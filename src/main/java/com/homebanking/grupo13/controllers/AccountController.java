@@ -14,34 +14,27 @@ import java.util.Scanner;
 @RequestMapping("/api/accounts")
 public class AccountController {
     private final AccountService service;
-
     private AccountController(AccountService service){
         this.service = service;
     }
-
     @GetMapping(value = "/accounts")
     public ResponseEntity<List<AccountDto>> getAccounts(){
         return ResponseEntity.status(HttpStatus.OK).body(service.getAccounts());
     }
-
     @GetMapping(value = "/{id}")
     public ResponseEntity<AccountDto> getAccountById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(service.getAccountById(id));
     }
-
     @PostMapping
     public ResponseEntity<AccountDto> createAccount(@Valid @RequestBody AccountDto account){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createAccount(account));
     }
-
     @PutMapping(value="/{id}")
     public ResponseEntity<AccountDto> updateAccount(@Valid @PathVariable Long id, @RequestBody AccountDto account){
         return ResponseEntity.status(HttpStatus.OK).body(service.updateAccount(id, account));
     }
-
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> deleteAccount(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(service.deleteAccount(id));
     }
-
 }

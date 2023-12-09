@@ -32,14 +32,10 @@ public class AccountService {
     }
 
     public static AccountDto createAccount(AccountDto dto) {
-        dto.setAmount(BigDecimal.ZERO);
-        // TODO: REFACTOR para crear diferentes tipos de cuenta inicial
-        dto.setType(AccountType.CAJA_AHORRO_PESOS);
         Account newAccount = AccountMapper.dtoToAccount(dto);
         return AccountMapper.accountToDto(repository.save(newAccount));
     }
 
-@Transactional
     public AccountDto updateAccount(Long id, AccountDto dto) {
         if (repository.existsById(id)){
             Account acc =  repository.findById(id).get();

@@ -17,7 +17,6 @@ public class AccountMapper {
         dto.setOwner_id(owner.getId());
         return dto;
     }
-
     static public Account dtoToAccount(AccountDto dto){
         Account account = new Account();
 

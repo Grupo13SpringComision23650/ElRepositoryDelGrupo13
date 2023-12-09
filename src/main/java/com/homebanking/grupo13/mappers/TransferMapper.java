@@ -23,7 +23,6 @@ public class TransferMapper {
 
         return transfer;
     }
-
     public static TransferDTO transferToDto(Transfer transfer) {
         TransferDTO dto = new TransferDTO();
         dto.setId(transfer.getId());

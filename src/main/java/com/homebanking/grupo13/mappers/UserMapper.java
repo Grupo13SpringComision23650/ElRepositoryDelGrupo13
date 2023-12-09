@@ -26,8 +26,6 @@ public class UserMapper {
     userDto.setEnabled(user.isEnabled());
 
     List<AccountDto> accountDtos = new ArrayList<>();
-    // accountsDtos da vacio
-    //System.out.println("  Accounts = >  "+user.getAccounts());
     for (Account account : user.getAccounts()) {
       AccountDto accountDto = AccountMapper.accountToDto(account);
       accountDtos.add(accountDto);
