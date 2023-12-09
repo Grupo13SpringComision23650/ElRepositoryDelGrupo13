@@ -35,8 +35,8 @@ public class Transfer {
     private BigDecimal amount;
 
     @CreationTimestamp
-    private LocalDateTime create_at;
+    private Timestamp create_at;
 
     @UpdateTimestamp
-    private LocalDateTime update_at;
+    private Timestamp update_at;
 }

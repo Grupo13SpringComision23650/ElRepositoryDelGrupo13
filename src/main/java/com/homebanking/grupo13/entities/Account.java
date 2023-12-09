@@ -6,12 +6,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "cuentas")
+@Table(name = "accounts")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,7 +25,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tipo_cuenta")
+    @ColumnDefault("0")
     private AccountType type;
 
     @Column(unique = true, nullable = false)
@@ -30,14 +34,17 @@ public class Account {
     @Column(unique = true, nullable = false)
     private String alias;
 
-    @Column(name = "monto", nullable = false )
+    @Column(nullable = false )
     private BigDecimal amount;
 
-    @Column(name = "fecha_creacion")
-    private LocalDateTime created_at;
+    @CreationTimestamp
+    private Timestamp created_at;
 
-    @Column(name = "fecha_modificacion")
-    private LocalDateTime updated_at;
+    @UpdateTimestamp
+    private Timestamp updated_at;
+
+    @ColumnDefault("false")
+    private boolean enabled;
 
     @ManyToOne
     private User owner;

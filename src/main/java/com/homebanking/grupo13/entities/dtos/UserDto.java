@@ -1,10 +1,8 @@
 package com.homebanking.grupo13.entities.dtos;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
@@ -27,9 +25,7 @@ public class UserDto {
   @NotBlank(message = "La Clave es necesaria")
   private String password;
 
-  @NotBlank(message = "EL DNI es necesario")
-  @Pattern(regexp="\\d{6,8}",message = "El documento debe tener entre 6 y 8 digitos")
-  private String dni;
+  private Long dni;
 
   private String birthday;
 

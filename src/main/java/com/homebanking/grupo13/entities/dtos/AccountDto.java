@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 public class AccountDto {
     private Long id;
 
-    @NotNull(message = "El tipo es necesario")
+    @NotNull(message = "EL tipo es necesario (numero)")
     private AccountType type;
 
     @NotBlank(message = "El CBU es necesario")
@@ -29,8 +29,10 @@ public class AccountDto {
     @NotBlank(message = "El Alias es necesario")
     private String alias;
 
-    @NotNull(message = "La Cantidad es necesario")
+    @NotNull(message = "La cantidad es necesaria")
     private BigDecimal amount;
+
+    private boolean enabled;
 
     @NotNull(message = "El onwer_id es necesario")
     private Long owner_id;

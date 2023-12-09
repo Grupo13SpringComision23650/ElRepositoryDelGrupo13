@@ -27,6 +27,7 @@ public class UserMapper {
 
     List<AccountDto> accountDtos = new ArrayList<>();
     for (Account account : user.getAccounts()) {
+      account.setOwner(user);
       AccountDto accountDto = AccountMapper.accountToDto(account);
       accountDtos.add(accountDto);
     }
