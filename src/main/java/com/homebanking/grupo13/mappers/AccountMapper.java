@@ -2,10 +2,15 @@ package com.homebanking.grupo13.mappers;
 
 import com.homebanking.grupo13.entities.Account;
 import com.homebanking.grupo13.entities.dtos.AccountDto;
+import com.homebanking.grupo13.repositories.IUserRepository;
 import lombok.experimental.UtilityClass;
 import com.homebanking.grupo13.entities.User;
+import org.springframework.beans.factory.annotation.Autowired;
+
 @UtilityClass
 public class AccountMapper {
+
+
     static public AccountDto accountToDto(Account account){
         AccountDto dto = new AccountDto();
         dto.setId(account.getId());
@@ -15,6 +20,7 @@ public class AccountMapper {
         dto.setAmount(account.getAmount());
         User owner=account.getOwner();
         dto.setOwner_id(owner.getId());
+
         return dto;
     }
     static public Account dtoToAccount(AccountDto dto){
