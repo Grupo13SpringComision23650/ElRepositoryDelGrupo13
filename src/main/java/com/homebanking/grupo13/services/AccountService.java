@@ -1,22 +1,29 @@
 package com.homebanking.grupo13.services;
 
 import com.homebanking.grupo13.entities.Account;
+import com.homebanking.grupo13.entities.User;
 import com.homebanking.grupo13.entities.dtos.AccountDto;
-import com.homebanking.grupo13.entities.enums.AccountType;
+import com.homebanking.grupo13.exceptions.AccountNotFoundException;
 import com.homebanking.grupo13.mappers.AccountMapper;
 import com.homebanking.grupo13.repositories.AccountRepository;
+import com.homebanking.grupo13.repositories.IUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
-    private final AccountRepository repository;
+    @Autowired
+    private AccountRepository repository;
 
-    private AccountService(AccountRepository repository){
+    @Autowired
+    private IUserRepository userRepository;
+
+    private AccountService(AccountRepository repository,IUserRepository userRepository){
         this.repository = repository;
+        this.userRepository=userRepository;
     }
 
     public AccountDto getAccountById(Long id) {
@@ -31,11 +38,14 @@ public class AccountService {
     }
 
     public AccountDto createAccount(AccountDto dto) {
-        dto.setAmount(BigDecimal.ZERO);
-        // TODO: REFACTOR para crear diferentes tipos de cuenta inicial
-        dto.setType(AccountType.CAJA_AHORRO_PESOS);
+
         Account newAccount = AccountMapper.dtoToAccount(dto);
-        return AccountMapper.accountToDto(repository.save(newAccount));
+
+        User owner=userRepository.getReferenceById(dto.getOwner_id());
+        newAccount.setOwner(owner);
+
+        Account accountSaved=repository.save(newAccount);
+        return AccountMapper.accountToDto(accountSaved);
     }
 
 
@@ -56,24 +66,28 @@ public class AccountService {
             }
 
             if (dto.getAmount() != null){
-                acc.setAmount(dto.getAmount());
+                acc.setAmount(acc.getAmount().add(dto.getAmount()));
             }
+            if (dto.getEnabled() != null){
+                acc.setEnabled(dto.getEnabled());
+            }
+            Account accountModified = repository.save(acc);
 
-            return AccountMapper.accountToDto(acc);
+            return AccountMapper.accountToDto(accountModified);
 
         } else {
-            return null;
+            throw new RuntimeException("Se ejecuto la rama del false en AccountService.updateAccount");
         }
     }
 
+    // TODO: Deshabilitar la cuenta (no eliminar)
+    public AccountDto deleteAccount(Long id) {
+        Account account = repository.findById(id)
+                .orElseThrow(()->new AccountNotFoundException("Cuenta no encontrada"));
 
-    public String deleteAccount(Long id) {
-        if (repository.existsById(id)){
-            repository.deleteById(id);
-            return "Cuenta eliminada";
-        } else {
-            return "No se pudo eliminar la cuenta";
-        }
+        account.setEnabled(false);
+        Account accountSaved=repository.save(account);
+        return AccountMapper.accountToDto(accountSaved);
     }
 
 }

@@ -1,32 +1,31 @@
 package com.homebanking.grupo13.services;
 
 
+import com.homebanking.grupo13.entities.Account;
 import com.homebanking.grupo13.entities.Transfer;
 import com.homebanking.grupo13.entities.dtos.TransferDTO;
+import com.homebanking.grupo13.exceptions.AccountNotFoundException;
+import com.homebanking.grupo13.exceptions.InvalidTransferException;
+import com.homebanking.grupo13.exceptions.TransferNotFoundException;
 import com.homebanking.grupo13.mappers.TransferMapper;
+import com.homebanking.grupo13.repositories.AccountRepository;
 import com.homebanking.grupo13.repositories.TransferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class TransferService {
-
     @Autowired
-    private TransferRepository repository;
+    private AccountRepository accountRepository;
+    @Autowired
+    private TransferRepository transferRepository;
 
-    /* TODO: Implementar este metodo cuando Account (o User) este disponible
-    public TransferDTO transfer(Account source,Account destine,BigDecimal amount){
-
-    }
-    */
 
     public List<TransferDTO> getTransfers() {
-        return repository
+        return transferRepository
                 .findAll()
                 .stream()
                 .map(TransferMapper::transferToDto)
@@ -34,29 +33,40 @@ public class TransferService {
     }
 
     public TransferDTO getTransferById(Long id) {
-        Transfer transfer = repository.findById(id).get();
+        Transfer transfer = transferRepository.findById(id)
+                .orElseThrow(() ->new TransferNotFoundException("Transferencia no encontrada"));
+
         return TransferMapper.transferToDto(transfer);
     }
 
+    //@Transactional(rollbackOn = Exception.class)
     public TransferDTO createTransfer(TransferDTO dto) {
-        Transfer transfer = TransferMapper.dtoToTransfer(dto);
-        transfer.setCreateAt(Timestamp.from(Instant.now()));
+        // Verificar que existen ambas cuentas
+        Account accountSource = accountRepository.findById(dto.getAccountSourceId())
+                .orElseThrow(() -> new AccountNotFoundException("Cuenta origen no encontrado"));
+        Account accountDestine = accountRepository.findById(dto.getAccountDestineId())
+                .orElseThrow(() -> new AccountNotFoundException("Cuenta destino no encontrado"));
+        // Chequear que la cuenta origen tenga fondos suficiente
+        if (accountSource.getAmount().compareTo(dto.getAmount()) < 0) {
+            throw new InvalidTransferException("Fondos insuficientes");
+        } if(!accountSource.getEnabled() || !accountDestine.getEnabled()) {
+            throw new InvalidTransferException("Cuenta desabilitada");
+        }
+        // Operacion arimetica entre cuentas
+        accountSource.setAmount(accountSource.getAmount().subtract(dto.getAmount()));
+        accountDestine.setAmount(accountDestine.getAmount().add(dto.getAmount()));
 
-        // TODO: validar transferencia, no puede haber transferencia
-        //      si la cuenta origen no tiene fondo suficiente
-        repository.save(transfer);
+        // Guardar en DB
+        accountRepository.save(accountDestine);
+        accountRepository.save(accountSource);
 
-        TransferDTO dto1 = TransferMapper.transferToDto(transfer);
-        return dto1;
+        // Crear la transferencia y guardar
+        Transfer transfer = new Transfer();
+        transfer.setAccountSourceId(accountSource.getId());
+        transfer.setAccountDestineId(accountDestine.getId());
+        transfer.setAmount(dto.getAmount());
+        transfer = transferRepository.save(transfer);
+
+        return TransferMapper.transferToDto(transfer);
     }
-
-
-    /*  TODO: Implementar este metodo cuando Account (o User) este disponible
-    public Transfer validateTransfer(TransferDTO dto){
-
-
-    }
-
-     */
 }
-

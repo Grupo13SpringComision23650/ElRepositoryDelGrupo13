@@ -2,6 +2,9 @@ package com.homebanking.grupo13.repositories;
 
 import com.homebanking.grupo13.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.Optional;
 // por convencion la llamo IUserRepository porque es una interface
 
 public interface IUserRepository extends JpaRepository<User,Long> {
@@ -9,4 +12,6 @@ public interface IUserRepository extends JpaRepository<User,Long> {
   boolean existsByEmail(String email);
 
 
+  //@Query(value = "SELECT * FROM users WHERE dni=?",nativeQuery = true)
+  Optional<User> findByDni(Long id);
 }

@@ -1,13 +1,18 @@
 package com.homebanking.grupo13.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "transfers")
@@ -21,14 +26,18 @@ public class Transfer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /* TODO: Implementar esto cuando Account este disponible
-    private Account accountSource;
-    private Account accountDestine;
-    */
+    @NotNull
+    private Long accountSourceId;
+
+    @NotNull
+    private Long accountDestineId;
 
     @Column(name="amount",scale=2)
     private BigDecimal amount;
 
-    @Column(name="created_at")
-    private Timestamp createAt;
+    @CreationTimestamp
+    private LocalDateTime created_at;
+
+    @UpdateTimestamp
+    private LocalDateTime updated_at;
 }
