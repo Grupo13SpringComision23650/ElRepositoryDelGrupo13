@@ -12,6 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "accounts")
@@ -37,10 +38,10 @@ public class Account {
     private BigDecimal amount;
 
     @CreationTimestamp
-    private Timestamp created_at;
+    private LocalDateTime created_at;
 
     @UpdateTimestamp
-    private Timestamp updated_at;
+    private LocalDateTime updated_at;
 
     @ColumnDefault("true")
     private Boolean enabled;

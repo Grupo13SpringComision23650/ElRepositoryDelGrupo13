@@ -1,7 +1,13 @@
 package com.homebanking.grupo13.exceptions;
 
-public class InvalidTransferException extends RuntimeException {
-        public InvalidTransferException(String message) {
-            super(message);
-        }
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+public class InvalidTransferException extends ResponseStatusException {
+    public InvalidTransferException(String message) {
+        super(HttpStatus.BAD_REQUEST,message);
     }
+    public InvalidTransferException() {
+        super(HttpStatus.BAD_REQUEST, "Transaccion no valida");
+    }
+}

@@ -10,9 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "transfers")
@@ -32,7 +30,7 @@ public class Transfer {
     @NotNull
     private Long accountDestineId;
 
-    @Column(name="amount",scale=2)
+    @Column(name = "amount", scale = 2)
     private BigDecimal amount;
 
     @CreationTimestamp
