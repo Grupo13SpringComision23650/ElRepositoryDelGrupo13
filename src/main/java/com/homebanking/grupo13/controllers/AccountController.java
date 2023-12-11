@@ -18,27 +18,28 @@ public class AccountController {
     private AccountService service;
 
     @GetMapping
-    public ResponseEntity<List<AccountDto>> getAccounts(){
+    public ResponseEntity<List<AccountDto>> getAccounts() {
         return ResponseEntity.status(HttpStatus.OK).body(service.getAccounts());
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<AccountDto> getAccountById(@PathVariable Long id){
+    public ResponseEntity<AccountDto> getAccountById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getAccountById(id));
     }
 
     @PostMapping
-    public ResponseEntity<AccountDto> createAccount(@Valid @RequestBody AccountDto account){
+    public ResponseEntity<AccountDto> createAccount(@Valid @RequestBody AccountDto account) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createAccount(account));
     }
 
-    @PutMapping(value="/{id}")
-    public ResponseEntity<AccountDto> updateAccount(@Valid @PathVariable Long id, @RequestBody AccountDto account){
-        return ResponseEntity.status(HttpStatus.OK).body(service.updateAccount(id, account));
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<AccountDto> updateAccount(@Valid @PathVariable Long id, @RequestBody AccountDto account) {
+        account.setId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(service.updateAccount(account));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<AccountDto> deleteAccount(@PathVariable Long id){
+    public ResponseEntity<AccountDto> deleteAccount(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.deleteAccount(id));
     }
 

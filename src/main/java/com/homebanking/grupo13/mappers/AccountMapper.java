@@ -9,7 +9,7 @@ import lombok.experimental.UtilityClass;
 public class AccountMapper {
 
 
-    static public AccountDto accountToDto(Account account){
+    static public AccountDto accountToDto(Account account) {
         AccountDto dto = new AccountDto();
         dto.setId(account.getId());
         dto.setType(account.getType());
@@ -17,12 +17,13 @@ public class AccountMapper {
         dto.setAlias(account.getAlias());
         dto.setAmount(account.getAmount());
         dto.setEnabled(account.getEnabled());
-        User owner=account.getOwner();
+        User owner = account.getOwner();
         dto.setOwner_id(owner.getId());
 
         return dto;
     }
-    static public Account dtoToAccount(AccountDto dto){
+
+    static public Account dtoToAccount(AccountDto dto) {
         Account account = new Account();
 
         account.setAlias(dto.getAlias());

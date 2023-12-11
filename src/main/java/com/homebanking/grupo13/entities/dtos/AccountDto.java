@@ -22,7 +22,7 @@ public class AccountDto {
     private AccountType type;
 
     @NotBlank(message = "El CBU es necesario")
-    @Pattern(regexp="\\d{22}",message = "EL CBU es un numero de 22 digitos")
+    @Pattern(regexp = "\\d{22}", message = "EL CBU es un numero de 22 digitos")
     private String cbu;
 
     @NotBlank(message = "El Alias es necesario")

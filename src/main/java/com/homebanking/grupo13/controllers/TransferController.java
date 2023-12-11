@@ -1,7 +1,7 @@
 package com.homebanking.grupo13.controllers;
 
 
-import com.homebanking.grupo13.entities.dtos.TransferDTO;
+import com.homebanking.grupo13.entities.dtos.TransferDto;
 import com.homebanking.grupo13.services.TransferService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -20,18 +20,18 @@ public class TransferController {
     private final TransferService service;
 
     @GetMapping
-    public ResponseEntity<List<TransferDTO>> getTransfers() {
-        List<TransferDTO> transfers = service.getTransfers();
+    public ResponseEntity<List<TransferDto>> getTransfers() {
+        List<TransferDto> transfers = service.getTransfers();
         return ResponseEntity.status(HttpStatus.OK).body(transfers);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<TransferDTO> getTransferById(Long id) {
+    public ResponseEntity<TransferDto> getTransferById(Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getTransferById(id));
     }
 
     @PostMapping
-    public ResponseEntity<TransferDTO> createTransfer(@Valid @RequestBody TransferDTO transfer) {
+    public ResponseEntity<TransferDto> createTransfer(@Valid @RequestBody TransferDto transfer) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createTransfer(transfer));
     }
 
