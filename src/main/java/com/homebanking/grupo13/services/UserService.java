@@ -51,12 +51,14 @@ public class UserService {
         User user = null;
         Optional<User> optionalUser = userRepository.findByDni(userDto.getDni());
 
+
         // En caso que ya exista
         if (optionalUser.isPresent()){
                 throw new UserAlreadyExistsException();
         }
         userDto.setEnabled(true);
         // Sino generar un nuevo usuario
+
         user = UserMapper.dtoToUser(userDto);
         User savedUser = userRepository.save(user);
 
