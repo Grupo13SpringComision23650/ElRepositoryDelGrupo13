@@ -5,6 +5,7 @@ import com.homebanking.grupo13.entities.User;
 import com.homebanking.grupo13.entities.dtos.AccountDto;
 import com.homebanking.grupo13.entities.dtos.UserDto;
 import com.homebanking.grupo13.entities.enums.AccountType;
+import com.homebanking.grupo13.exceptions.UserAlreadyExistsException;
 import com.homebanking.grupo13.exceptions.UserNotFoundException;
 import com.homebanking.grupo13.mappers.AccountMapper;
 import com.homebanking.grupo13.mappers.UserMapper;
@@ -50,16 +51,12 @@ public class UserService {
         User user = null;
         Optional<User> optionalUser = userRepository.findByDni(userDto.getDni());
 
-        // En caso que exista el usuario (por dni), reativar y aclualizar datos
-        if (optionalUser.isPresent()) {
-            user = optionalUser.get();
-            userDto.setEnabled(true);
-            userDto.setId(user.getId());
-            return this.updateUser(userDto);
+        // En caso que ya exista
+        if (optionalUser.isPresent()){
+                throw new UserAlreadyExistsException();
         }
-
-        // Sino generar un nuevo usuario
         userDto.setEnabled(true);
+        // Sino generar un nuevo usuario
         user = UserMapper.dtoToUser(userDto);
         User savedUser = userRepository.save(user);
 
@@ -68,7 +65,7 @@ public class UserService {
         account.setAmount(BigDecimal.ZERO);
         account.setType(AccountType.CAJA_AHORRO_PESOS); // por defecto
         account.setAlias("codo.a.codo.alias." + (int) (Math.random() * 10000));
-        account.setCbu("00000123" + (int) (Math.random() * Integer.MAX_VALUE));
+        account.setCbu("00000123" + (long) (Math.random() * Long.MAX_VALUE));
         account.setOwner(savedUser);
         account.setEnabled(true);
         Account newAccount = IAccountRepository.save(account);
