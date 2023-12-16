@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,12 +51,14 @@ public class UserService {
         User user = null;
         Optional<User> optionalUser = userRepository.findByDni(userDto.getDni());
 
+
         // En caso que ya exista
         if (optionalUser.isPresent()){
                 throw new UserAlreadyExistsException();
         }
         userDto.setEnabled(true);
         // Sino generar un nuevo usuario
+
         user = UserMapper.dtoToUser(userDto);
         User savedUser = userRepository.save(user);
 
@@ -74,7 +75,7 @@ public class UserService {
 
         final AccountDto accountDto = AccountMapper.accountToDto(newAccount);
         final UserDto savedUserDto = UserMapper.userToDto(savedUser);
-        savedUserDto.setAccountsDtos(List.of(accountDto)); // arreglado
+        savedUserDto.setAccounts(List.of(accountDto)); // arreglado
 
         return savedUserDto;
     }
@@ -106,12 +107,12 @@ public class UserService {
         if (userDto.getEnabled() != null) {
             user.setEnabled(userDto.getEnabled());
             // Tambien actualizar el estado de las cuentas
-            for (AccountDto acc : userDto.getAccountsDtos()) {
+            for (Account acc : user.getAccounts()) {
                 acc.setEnabled(userDto.getEnabled());
             }
         }
 
-        // si accounts (dto) es enviado por el usuario, son agregados a la lista de accounts
+        // TODO: si accounts (dto) es enviado por el usuario, son agregados a la lista de accounts
 
 
         User updatedUser = userRepository.save(user);
