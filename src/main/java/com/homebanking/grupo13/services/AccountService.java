@@ -10,6 +10,7 @@ import com.homebanking.grupo13.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,13 +36,12 @@ public class AccountService {
     }
 
     public AccountDto createAccount(AccountDto dto) {
-
         Account newAccount = AccountMapper.dtoToAccount(dto);
-
-        User owner = userRepository.getReferenceById(dto.getOwner_id());
+        User owner = userRepository.getReferenceById(dto.getOwner());
         newAccount.setOwner(owner);
-
+        newAccount.setCbu("00000123" + (int) (Math.random() * Integer.MAX_VALUE));
         newAccount.setEnabled(true);
+        newAccount.setUpdated_at(LocalDateTime.now()); // Fecha de modificación
         Account accountSaved = accountRepository.save(newAccount);
         return AccountMapper.accountToDto(accountSaved);
     }

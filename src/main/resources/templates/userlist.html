@@ -10,54 +10,56 @@
 
   <title>Spring Banking</title>
 
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+<link href="../static/css/heroic-features.css" rel="stylesheet">
 
-  <!-- Custom styles for this template -->
-  <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
+ <!-- Custom styles for this template -->
+ <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
 
 </head>
 
 <body>
 
-<!-- Navigation -->
-<div th:insert="/template_user.html::header"></div>
+  <!-- Navigation -->
+  <div th:insert="~{template_user.html :: menu}"></div>
 
 <!-- Page Content -->
-<div class="container">
+<div class="container layout">
+  <div class="container layout">
+    <div class="card mb-4 layout1">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="mt-4 mb-3">
+              Spring Banking <small>Lista de Usuarios</small>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div><br>
 
-
-  <!-- Page Heading/Breadcrumbs -->
-  <h1 class="mt-4 mb-3">
-    Spring Banking <small>Usuarios</small>
-  </h1>
-
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
-    <li class="breadcrumb-item active">Ver Usuarios</li>
-  </ol>
-  <h2>Usuarios</h2>
-  <table class="table">
+  <table class="table text-light">
     <thead>
       <tr>
+        <th scope="col">ID</th>
         <th scope="col">Nombre</th>
         <th scope="col">Email</th>
         <th scope="col">D.N.I</th>
         <th scope="col">Fecha Cumple</th>
-        <th scope="col">Dirección</th>
-        <th scope="col">Creado</th>
-        <th scope="col">Modificado</th>
+        <th scope="col">Dirección</th>      
+        <th scope="col">Habilitado</th>      
       </tr>
     </thead>
     <tbody>
-      <tr th:each="users: ${user}">
-        <td  th:text="${users.nameUser}"></td>
-        <td  th:text="${users.email}"></td>
-        <td  th:text="${users.dni}"></td>
-        <td  th:text="${users.birthday}"></td>
-        <td  th:text="${users.address}"></td>
-        <td  th:text="${users.createAt}"></td>
-        <td  th:text="${users.modifiedAt}"></td>
+      <tr th:each="user: ${ulist}">
+        <td  th:text="${user.id}"></td>
+        <td  th:text="${user.nameUser}"></td>
+        <td  th:text="${user.email}"></td>
+        <td  th:text="${user.dni}"></td>
+        <td  th:text="${user.birthday}"></td>
+        <td  th:text="${user.address}"></td>
+        <td  th:text="${user.enabled}"></td>        
       </tr>
     </tbody>
   </table>
@@ -67,11 +69,16 @@
 
 
 <!-- Footer -->
-<div th:insert="/template_user.html::footer"></div>
+<footer class="py-5 bg-dark text-light" >
+  <div class="container">
+      <p class="m-0 text-center">Copyright &copy; Spring Banking 2023</p>
+  </div>
+</footer>
 
 <!-- Bootstrap core JavaScript -->
-<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" ></script>
+
 
 </body>
 

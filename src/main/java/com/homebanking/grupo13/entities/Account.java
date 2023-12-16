@@ -11,7 +11,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -47,5 +46,6 @@ public class Account {
     private Boolean enabled;
 
     @ManyToOne
+    @JoinColumn(name = "id_user")
     private User owner;
 }

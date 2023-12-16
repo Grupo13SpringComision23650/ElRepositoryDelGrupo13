@@ -18,7 +18,9 @@ public class AccountMapper {
         dto.setAmount(account.getAmount());
         dto.setEnabled(account.getEnabled());
         User owner = account.getOwner();
-        dto.setOwner_id(owner.getId());
+        dto.setOwner(owner.getId());
+        dto.setCreated_at(account.getCreated_at());
+        dto.setUpdated_at(account.getUpdated_at());
 
         return dto;
     }
@@ -26,11 +28,14 @@ public class AccountMapper {
     static public Account dtoToAccount(AccountDto dto) {
         Account account = new Account();
 
-        account.setAlias(dto.getAlias());
+        account.setId(dto.getId());
         account.setType(dto.getType());
         account.setCbu(dto.getCbu());
-        account.setEnabled(dto.getEnabled());
+        account.setAlias(dto.getAlias());
         account.setAmount(dto.getAmount());
+        account.setEnabled(dto.getEnabled());   
+        account.setCreated_at(dto.getCreated_at());
+        account.setUpdated_at(dto.getUpdated_at());
 
         return account;
     }
