@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -34,5 +35,9 @@ public class AccountDto {
     private Boolean enabled;
 
     @NotNull(message = "El onwer_id es necesario")
-    private Long owner_id;
+    private Long owner;
+
+    private LocalDateTime created_at;
+
+    private LocalDateTime updated_at;
 }

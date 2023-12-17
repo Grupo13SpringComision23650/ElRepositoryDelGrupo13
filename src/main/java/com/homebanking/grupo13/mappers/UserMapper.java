@@ -33,7 +33,7 @@ public class UserMapper {
             AccountDto accountDto = AccountMapper.accountToDto(account);
             accountDtos.add(accountDto);
         }
-        userDto.setAccounts(accountDtos);
+        userDto.setAccountsDtos(accountDtos);
 
         return userDto;
     }
@@ -53,7 +53,7 @@ public class UserMapper {
 
 
         List<Account> accounts = new ArrayList<>();
-        for (AccountDto accountDto : userDto.getAccounts()) {
+        for (AccountDto accountDto : userDto.getAccountsDtos()) {
             Account account = AccountMapper.dtoToAccount(accountDto);
             accounts.add(account);
         }

@@ -3,16 +3,16 @@ package com.homebanking.grupo13.services;
 import com.homebanking.grupo13.entities.Account;
 import com.homebanking.grupo13.entities.User;
 import com.homebanking.grupo13.entities.dtos.AccountDto;
-import com.homebanking.grupo13.exceptions.AccountNotFoundException;
 import com.homebanking.grupo13.mappers.AccountMapper;
 import com.homebanking.grupo13.repositories.IAccountRepository;
 import com.homebanking.grupo13.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import com.homebanking.grupo13.exceptions.RecordNotFoundException;
 @Service
 public class AccountService {
     @Autowired
@@ -24,7 +24,7 @@ public class AccountService {
 
     public AccountDto getAccountById(Long id) {
         Account acc = accountRepository.findById(id)
-                .orElseThrow(() -> new AccountNotFoundException());
+                .orElseThrow(() -> new RecordNotFoundException("Cuenta no encontrada id="+id));
         return AccountMapper.accountToDto(acc);
     }
 
@@ -35,13 +35,12 @@ public class AccountService {
     }
 
     public AccountDto createAccount(AccountDto dto) {
-
         Account newAccount = AccountMapper.dtoToAccount(dto);
-
-        User owner = userRepository.getReferenceById(dto.getOwner_id());
+        User owner = userRepository.getReferenceById(dto.getOwner());
         newAccount.setOwner(owner);
-
+        newAccount.setCbu("00000123" + (int) (Math.random() * Integer.MAX_VALUE));
         newAccount.setEnabled(true);
+        newAccount.setUpdated_at(LocalDateTime.now()); // Fecha de modificación
         Account accountSaved = accountRepository.save(newAccount);
         return AccountMapper.accountToDto(accountSaved);
     }
@@ -49,7 +48,7 @@ public class AccountService {
 
     public AccountDto updateAccount(AccountDto dto) {
         Account acc = accountRepository.findById(dto.getId())
-                .orElseThrow(() -> new AccountNotFoundException());
+                .orElseThrow(() -> new RecordNotFoundException("Cuenta no encontrada id="+dto.getId()));
 
         if (dto.getAlias() != null) {
             acc.setAlias(dto.getAlias());
@@ -79,7 +78,7 @@ public class AccountService {
 
     public AccountDto deleteAccount(Long id) {
         Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new AccountNotFoundException());
+                .orElseThrow(() -> new RecordNotFoundException("Cuenta no encontrada id="+id));
 
         account.setEnabled(false);
         Account accountSaved = accountRepository.save(account);

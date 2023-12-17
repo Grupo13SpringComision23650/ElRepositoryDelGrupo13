@@ -41,6 +41,6 @@ public class UserDto {
 
     private LocalDateTime updated_at;
 
-    private List<AccountDto> accounts = new ArrayList<>();
+    private List<AccountDto> accountsDtos = new ArrayList<>();
 
 }
