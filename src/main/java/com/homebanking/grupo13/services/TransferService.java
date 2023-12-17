@@ -4,9 +4,7 @@ package com.homebanking.grupo13.services;
 import com.homebanking.grupo13.entities.Account;
 import com.homebanking.grupo13.entities.Transfer;
 import com.homebanking.grupo13.entities.dtos.TransferDto;
-import com.homebanking.grupo13.exceptions.AccountNotFoundException;
-import com.homebanking.grupo13.exceptions.InvalidTransferException;
-import com.homebanking.grupo13.exceptions.TransferNotFoundException;
+import com.homebanking.grupo13.exceptions.RecordNotFoundException;
 import com.homebanking.grupo13.mappers.TransferMapper;
 import com.homebanking.grupo13.repositories.IAccountRepository;
 import com.homebanking.grupo13.repositories.ITransferRepository;
@@ -15,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+import com.homebanking.grupo13.exceptions.InvalidStatusException;
 @Service
 public class TransferService {
     @Autowired
@@ -34,7 +32,7 @@ public class TransferService {
 
     public TransferDto getTransferById(Long id) {
         Transfer transfer = transferRepository.findById(id)
-                .orElseThrow(() -> new TransferNotFoundException());
+                .orElseThrow(() -> new RecordNotFoundException("Transferencia no encontrada id="+id));
 
         return TransferMapper.transferToDto(transfer);
     }
@@ -43,15 +41,17 @@ public class TransferService {
     public TransferDto createTransfer(TransferDto dto) {
         // Verificar que existen ambas cuentas
         Account accountSource = accountRepository.findById(dto.getAccountSourceId())
-                .orElseThrow(() -> new AccountNotFoundException());
+                .orElseThrow(() -> new RecordNotFoundException("Cuenta no encontrada id="+dto.getAccountSourceId()));
+
         Account accountDestine = accountRepository.findById(dto.getAccountDestineId())
-                .orElseThrow(() -> new AccountNotFoundException());
+                .orElseThrow(() -> new RecordNotFoundException("Cuenta no encontrada id="+dto.getAccountDestineId()));
+
         // Chequear que la cuenta origen tenga fondos suficiente
         if (accountSource.getAmount().compareTo(dto.getAmount()) < 0) {
-            throw new InvalidTransferException("Fondos insuficientes");
+            throw new InvalidStatusException("Fondos insuficientes");
         }
         if (!accountSource.getEnabled() || !accountDestine.getEnabled()) {
-            throw new InvalidTransferException("Cuenta desabilitada");
+            throw new InvalidStatusException("Cuenta desabilitada");
         }
         // Operacion arimetica entre cuentas
         accountSource.setAmount(accountSource.getAmount().subtract(dto.getAmount()));

@@ -5,8 +5,8 @@ import com.homebanking.grupo13.entities.User;
 import com.homebanking.grupo13.entities.dtos.AccountDto;
 import com.homebanking.grupo13.entities.dtos.UserDto;
 import com.homebanking.grupo13.entities.enums.AccountType;
-import com.homebanking.grupo13.exceptions.UserAlreadyExistsException;
-import com.homebanking.grupo13.exceptions.UserNotFoundException;
+import com.homebanking.grupo13.exceptions.RecordAlreadyExistsException;
+import com.homebanking.grupo13.exceptions.RecordNotFoundException;
 import com.homebanking.grupo13.mappers.AccountMapper;
 import com.homebanking.grupo13.mappers.UserMapper;
 import com.homebanking.grupo13.repositories.IAccountRepository;
@@ -30,13 +30,13 @@ public class UserService {
     // listar por ID
     public UserDto getUserById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() ->new UserNotFoundException());
+                .orElseThrow(() ->new RecordNotFoundException("Usuario no encontrado id="+id));
         return UserMapper.userToDto(user);
     }
 
     public UserDto getUserByDni(Long dni) {
         User user = userRepository.findByDni(dni)
-                .orElseThrow(() -> new UserNotFoundException());
+                .orElseThrow(() -> new RecordNotFoundException("Usuario no encontrado dni="+dni));
         return UserMapper.userToDto(user);
     }
 
@@ -54,7 +54,7 @@ public class UserService {
 
         // En caso que ya exista
         if (optionalUser.isPresent()){
-                throw new UserAlreadyExistsException();
+                throw new RecordAlreadyExistsException("Usuario ya existe dni="+userDto.getDni());
         }
         userDto.setEnabled(true);
         // Sino generar un nuevo usuario
@@ -84,7 +84,7 @@ public class UserService {
 
     public UserDto updateUser(UserDto userDto) {
         User user = userRepository.findById(userDto.getId())
-                .orElseThrow(() -> new UserNotFoundException());
+                .orElseThrow(() -> new RecordNotFoundException("Usuario no encontrado id="+userDto.getId()));
 
         if (userDto.getNameUser() != null) {
             user.setNameUser(userDto.getNameUser());
@@ -122,7 +122,7 @@ public class UserService {
     //Solo hay que deshabilitarlo
     public UserDto deleteUser(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException());
+                .orElseThrow(() -> new RecordNotFoundException("Usuario no encontrado id="+id));
 
         user.setEnabled(false);
 
