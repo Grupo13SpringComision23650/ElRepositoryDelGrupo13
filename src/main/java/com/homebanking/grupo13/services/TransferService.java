@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 @Service
 public class TransferService {
     @Autowired
-    private IAccountRepository IAccountRepository;
+    private IAccountRepository accountRepository;
     @Autowired
-    private ITransferRepository ITransferRepository;
+    private ITransferRepository transferRepository;
 
 
     public List<TransferDto> getTransfers() {
-        return ITransferRepository
+        return transferRepository
                 .findAll()
                 .stream()
                 .map(TransferMapper::transferToDto)
@@ -33,7 +33,7 @@ public class TransferService {
     }
 
     public TransferDto getTransferById(Long id) {
-        Transfer transfer = ITransferRepository.findById(id)
+        Transfer transfer = transferRepository.findById(id)
                 .orElseThrow(() -> new TransferNotFoundException());
 
         return TransferMapper.transferToDto(transfer);
@@ -42,9 +42,9 @@ public class TransferService {
     //@Transactional(rollbackOn = Exception.class)
     public TransferDto createTransfer(TransferDto dto) {
         // Verificar que existen ambas cuentas
-        Account accountSource = IAccountRepository.findById(dto.getAccountSourceId())
+        Account accountSource = accountRepository.findById(dto.getAccountSourceId())
                 .orElseThrow(() -> new AccountNotFoundException());
-        Account accountDestine = IAccountRepository.findById(dto.getAccountDestineId())
+        Account accountDestine = accountRepository.findById(dto.getAccountDestineId())
                 .orElseThrow(() -> new AccountNotFoundException());
         // Chequear que la cuenta origen tenga fondos suficiente
         if (accountSource.getAmount().compareTo(dto.getAmount()) < 0) {
@@ -58,15 +58,15 @@ public class TransferService {
         accountDestine.setAmount(accountDestine.getAmount().add(dto.getAmount()));
 
         // Guardar en DB
-        IAccountRepository.save(accountDestine);
-        IAccountRepository.save(accountSource);
+        accountRepository.save(accountDestine);
+        accountRepository.save(accountSource);
 
         // Crear la transferencia y guardar
         Transfer transfer = new Transfer();
         transfer.setAccountSourceId(accountSource.getId());
         transfer.setAccountDestineId(accountDestine.getId());
         transfer.setAmount(dto.getAmount());
-        Transfer savedTransfer = ITransferRepository.save(transfer);
+        Transfer savedTransfer = transferRepository.save(transfer);
 
         return TransferMapper.transferToDto(savedTransfer);
     }

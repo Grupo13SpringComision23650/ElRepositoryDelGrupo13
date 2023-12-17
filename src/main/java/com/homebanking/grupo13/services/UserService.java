@@ -75,7 +75,7 @@ public class UserService {
 
         final AccountDto accountDto = AccountMapper.accountToDto(newAccount);
         final UserDto savedUserDto = UserMapper.userToDto(savedUser);
-        savedUserDto.setAccounts(List.of(accountDto)); // arreglado
+        savedUserDto.setAccountsDtos(List.of(accountDto));
 
         return savedUserDto;
     }
