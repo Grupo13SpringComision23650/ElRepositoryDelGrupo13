@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.homebanking.grupo13.exceptions.RecordNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class AccountService {
     @Autowired

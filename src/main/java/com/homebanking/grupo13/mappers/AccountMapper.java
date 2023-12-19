@@ -36,6 +36,7 @@ public class AccountMapper {
         account.setEnabled(dto.getEnabled());   
         account.setCreated_at(dto.getCreated_at());
         account.setUpdated_at(dto.getUpdated_at());
+        //account.setOwner(dto.getOwner());  // no pude poner el owner
 
         return account;
     }
