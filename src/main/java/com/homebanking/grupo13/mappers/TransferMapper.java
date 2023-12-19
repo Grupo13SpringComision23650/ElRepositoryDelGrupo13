@@ -17,8 +17,8 @@ public class TransferMapper {
         transfer.setAmount(dto.getAmount());
         transfer.setAccountSourceId(dto.getAccountSourceId());
         transfer.setAccountDestineId(dto.getAccountDestineId());
-        transfer.setCreated_at(LocalDateTime.now());
-        transfer.setUpdated_at(LocalDateTime.now());
+        transfer.setCreated_at(dto.getCreated_at());
+        transfer.setUpdated_at(dto.getUpdated_at());
 
 
         return transfer;
@@ -30,8 +30,8 @@ public class TransferMapper {
         dto.setAmount(transfer.getAmount());
         dto.setAccountSourceId(transfer.getAccountSourceId());
         dto.setAccountDestineId(transfer.getAccountDestineId());
-        dto.setCreated_at(LocalDateTime.now());
-        dto.setUpdated_at(LocalDateTime.now());
+        dto.setCreated_at(transfer.getCreated_at());
+        dto.setUpdated_at(transfer.getUpdated_at());
 
         return dto;
     }

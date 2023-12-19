@@ -11,6 +11,7 @@ import com.homebanking.grupo13.mappers.AccountMapper;
 import com.homebanking.grupo13.mappers.UserMapper;
 import com.homebanking.grupo13.repositories.IAccountRepository;
 import com.homebanking.grupo13.repositories.IUserRepository;
+import com.homebanking.grupo13.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class UserService {
     @Autowired
     private IUserRepository userRepository;
     @Autowired
-    private IAccountRepository IAccountRepository;
+    private IAccountRepository accountRepository;
 
     // listar por ID
     public UserDto getUserById(Long id) {
@@ -66,11 +67,11 @@ public class UserService {
         Account account = new Account();
         account.setAmount(BigDecimal.ZERO);
         account.setType(AccountType.CAJA_AHORRO_PESOS); // por defecto
-        account.setAlias("codo.a.codo.alias." + (int) (Math.random() * 10000));
-        account.setCbu("00000123" + (long) (Math.random() * Long.MAX_VALUE));
+        account.setAlias(Utils.generateAlias());
+        account.setCbu(Utils.generateCbu());
         account.setOwner(savedUser);
         account.setEnabled(true);
-        Account newAccount = IAccountRepository.save(account);
+        Account newAccount = accountRepository.save(account);
 
 
         final AccountDto accountDto = AccountMapper.accountToDto(newAccount);

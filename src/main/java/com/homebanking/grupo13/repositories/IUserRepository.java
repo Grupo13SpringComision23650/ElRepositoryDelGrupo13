@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface IUserRepository extends JpaRepository<User,Long> {
   // Utilizo un Query Metod JPA para la verificacion de email exist para saber si ya existe el Usuario en la base
   boolean existsByEmail(String email);
-  User findByEmail(String email);
+  Optional<User> findByEmail(String email);
   Optional<User> findByDni(Long id);
 }

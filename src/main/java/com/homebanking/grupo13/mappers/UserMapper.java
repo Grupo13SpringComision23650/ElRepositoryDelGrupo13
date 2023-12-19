@@ -48,8 +48,8 @@ public class UserMapper {
         user.setBirthday(userDto.getBirthday());
         user.setAddress(userDto.getAddress());
         user.setEnabled(userDto.getEnabled());
-        user.setCreated_at(LocalDateTime.now());
-        user.setUpdated_at(LocalDateTime.now());
+        user.setCreated_at(userDto.getCreated_at());
+        user.setUpdated_at(userDto.getUpdated_at());
 
 
         List<Account> accounts = new ArrayList<>();
